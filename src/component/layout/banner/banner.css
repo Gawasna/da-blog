@@ -8,6 +8,10 @@
     position: relative;
     overflow: hidden;
   }
+
+  .swiper {
+    height: 400px;
+  }
   
   .slide-image {
     width: 100%;

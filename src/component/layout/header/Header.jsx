@@ -1,33 +1,59 @@
-import React, { useState } from "react";
-import "./Header.css"; // Import CSS file
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+// import { NavLink } from "react-router-dom";
+// import { useNavigate } from "react-router";
+
+// const navigate = useNavigate();
+// const handlenavlink = (path) => {
+//   console.log("hello");
+//   navigate(path);
+// };
 
 const Header = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedMode = sessionStorage.getItem("darkMode");
+    return savedMode === "true";
+  });
 
   const toggleTheme = () => {
-    setDarkMode((prevMode) => !prevMode);
-    document.body.style.backgroundColor = darkMode ? "#ffffff" : "#343a40";
-    document.body.style.color = darkMode ? "#000000" : "#ffffff";
+    setDarkMode((prevMode) => {
+      const newMode = !prevMode; 
+      sessionStorage.setItem("darkMode", newMode);
+      document.body.dataset.theme = newMode ? 'dark' : '';
+      return newMode;
+    });
   };
 
+  useEffect(() => {
+    document.body.dataset.theme = darkMode ? 'dark' : '';
+  }, [darkMode]);
+
   return (
-    <header className="header">
+    <header>
       <div className="header-container">
         <div className="header-left">
           <div className="headerF">
-            <img
+            {/* <img
               id="navbtn"
               width="20"
               height="20"
               src="https://img.icons8.com/ios-glyphs/30/menu--v1.png"
               alt="menu--v1"
-            />
-            <div className="text-background">
-              <h3 id="title">My App</h3>
-            </div>
-            
+            />  */}
+            {/* <span class="fas fa-bars"></span> */}
+            <label className="label-nav" htmlFor="tgnavmL">
+                <FontAwesomeIcon icon={faBars} />
+              </label>
           </div>
-          <div className="headerS">
+            <div className="title-bg">
+            <a id="title" href="/">
+              Gawasu's Blog
+            </a>
+            </div>
+        </div>
+        <div className="header-right">
+        <div className="headerS">
             {/* search function */}
             <form className="search-form" action="searching">
               <input
@@ -60,8 +86,6 @@ const Header = () => {
               </span>
             </form>
           </div>
-        </div>
-        <div className="header-right">
           <div className="headerN">
             <img
               id="navbtn"

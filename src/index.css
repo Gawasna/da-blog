@@ -1,16 +1,152 @@
 :root {
-
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --min-height-header: 30px;
+    --header-height: 50px;
+    --headlW: 250px;
+    --normal-border: 1px solid #333;
+    --normal-dark-border: 1px solid #666;
+    --dev-stage-section: 3px #000000 dotted;
+    --transL1: all .1 ease;
+    --margin-small: 7.5px;
 }
 
 * {
     margin: 0;
+    box-sizing: border-box;
 }
+
+.navmLIn {
+    /* visibility: hidden; */
+    display: none;
+}
+
+header {
+    width: 100%;
+    z-index: 10;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    border-bottom: var(--normal-border);
+}
+
+body[data-theme="light"] {
+    background-color: #ffffff;
+    color: #000000;
+    border: var(--normal-border);
+}
+
+body[data-theme="dark"] {
+    background-color: #343a40;
+    color: #ffffff;
+    border: var(--normal-dark-border);
+}
+
+.header-container {
+    position: relative;
+    /* height: var(--headerH);
+    color: var(--headerC);
+    background: var(--headerB); */
+    min-height: 30px;/*test*/
+    display: flex;
+}
+
+.header-left {
+    display: flex;
+    border-right: var(--header-border);
+    align-items: center;
+    /* width: var(--navW); */
+    width: var(--headlW);
+    padding: 0 0 0 20px;
+    /* padding: 10px 0 0 10px; */
+    /* transition: var(--trans-1); */
+    transition: var(--transL1);
+}
+
+.header-left >* {
+    padding: 0 7.5px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: auto;
+    padding: 0 25px;
+}
+
+#title {
+    user-select: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.title-bg {
+    /* font-size: 48px; Kích thước chữ */
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-weight: bold; /* Đậm chữ */
+    color: transparent; /* Màu chữ trở thành trong suốt */
+    background-image: url('./assets/grady.webp'); /* Tạo gradient cho nền */
+    background-clip: text; /* Cắt nền theo chữ */
+    -webkit-background-clip: text; /* Hỗ trợ cho trình duyệt Webkit */
+    text-fill-color: transparent; /* Đảm bảo chữ không có màu */
+}  
 
 .mainL {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
 
+.sectionR {
+    width: -webkit-fill-available;
+}
+
+.sectionCn {
+    display: flex;
+}
+
+.blogmT {
+    flex: 1;
+}
+
+.mainBlog {
+    display: flex;
+    flex-direction: column;
+}
+
+.bannerSt {
+    background-color: violet;
+    border: var(--dev-stage-section);
+}
+
+.blogSt {
+    background-color: cadetblue;
+    border: var(--dev-stage-section);
+}
+
+.ftpB {
+    background-color: deepskyblue;
+    border: var(--dev-stage-section);
+}
+
+/* navmL */
+.navmL {
+    /* display: block; */
+    /* position: sticky;
+    top: 0; */
+    left: 0;
+    height: 700px;
+    width: var(--headlW);
+    background-color: #da6600;
+    transition: var(--transL1);
+    border: 3px #000000 dotted;
+    z-index: 10;
+    /* position: fixed; */
+    /* top: 0;*/
+}
+
+#tgnavmL:checked ~  .navblog {
+    visibility: visible;
+    width: var(--headlW);
+  }
+  
+  #tgnavmL:not(:checked) ~ .navblog {
+    display: none;
+  }
