@@ -1,104 +1,84 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
-// import { NavLink } from "react-router-dom";
-// import { useNavigate } from "react-router";
-
-// const navigate = useNavigate();
-// const handlenavlink = (path) => {
-//   console.log("hello");
-//   navigate(path);
-// };
+import { faBars, faMoon, faSun, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
+import "./b.css";
+import SearchForm from "./SearchForm";
 
 const Header = () => {
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = sessionStorage.getItem("darkMode");
     return savedMode === "true";
   });
-
+  
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const toggleTheme = () => {
     setDarkMode((prevMode) => {
-      const newMode = !prevMode; 
+      const newMode = !prevMode;
       sessionStorage.setItem("darkMode", newMode);
-      document.body.dataset.theme = newMode ? 'dark' : '';
+      document.body.dataset.theme = newMode ? "dark" : "";
       return newMode;
     });
   };
 
+  const openAction = () => {
+    setUserMenuOpen((prevOpen) => !prevOpen); 
+  };
+
   useEffect(() => {
-    document.body.dataset.theme = darkMode ? 'dark' : '';
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(".user-menu") && !event.target.closest(".user-button")) {
+        setUserMenuOpen(false); 
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.dataset.theme = darkMode ? "dark" : "";
   }, [darkMode]);
+
+  const navigate = useNavigate();
+  const handleNav = (path) => {
+    navigate(path);
+  };
 
   return (
     <header>
       <div className="header-container">
         <div className="header-left">
           <div className="headerF">
-            {/* <img
-              id="navbtn"
-              width="20"
-              height="20"
-              src="https://img.icons8.com/ios-glyphs/30/menu--v1.png"
-              alt="menu--v1"
-            />  */}
-            {/* <span class="fas fa-bars"></span> */}
             <label className="label-nav" htmlFor="tgnavmL">
-                <FontAwesomeIcon icon={faBars} />
-              </label>
+              <FontAwesomeIcon icon={faBars} />
+            </label>
           </div>
-            <div className="title-bg">
-            <a id="title" href="/">
-              Gawasu's Blog
-            </a>
+          <div className="title-bg">
+            <div id="title">
+              <NavLink to={"/"}>Gawasna's Blog</NavLink>
             </div>
+          </div>
         </div>
         <div className="header-right">
-        <div className="headerS">
-            {/* search function */}
-            <form className="search-form" action="searching">
-              <input
-                type="text"
-                name="search"
-                id="searchfield"
-                placeholder="Search something..."
-                autoComplete="off"
-              />
-              <span id="search-results">
-                <ul id="results-list"></ul>
-              </span>
-              <span className="search-icon">
-                <img
-                  id="searchbtn"
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios/50/search--v1.png"
-                  alt="search--v1"
-                />
-              </span>
-              <span className="clear-icon">
-                <img
-                  id="clear-svg"
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ios/50/delete-sign--v1.png"
-                  alt="delete-sign--v1"
-                />
-              </span>
-            </form>
-          </div>
-          <div className="headerN">
-            <img
-              id="navbtn"
-              width="20"
-              height="20"
-              src="https://img.icons8.com/ios-glyphs/30/notifications.png"
-              alt="notifications"
-            />
+          <div className="headerS">
+            <SearchForm></SearchForm>
           </div>
           <div className="headerM">
-            <button className="header-button" onClick={toggleTheme}>
-              {darkMode ? "Light Mode" : "Dark Mode"}
+            <button className="theme-button" onClick={toggleTheme}>
+              <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
             </button>
+            <button className="user-button" onClick={openAction}>
+              <FontAwesomeIcon icon={faUser} />
+            </button>
+            {userMenuOpen && (
+              <div className="user-menu">
+                <NavLink to={"/login"} onClick={() => handleNav("/login")}>Login</NavLink>
+                <NavLink to={"/signup"} onClick={() => handleNav("/signup")}>Sign Up</NavLink>
+              </div>
+            )}
           </div>
         </div>
       </div>

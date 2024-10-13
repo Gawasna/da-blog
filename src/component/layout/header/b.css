@@ -1,0 +1,104 @@
+.user-menu {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+  
+  .user-menu a {
+    display: block;
+    margin: 5px 0;
+    color: black;
+    text-decoration: none;
+  }
+
+/* Căn chỉnh chung */
+.search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 375px;
+  }
+  
+  #searchfield {
+    width: 100%;
+    padding: 8px 35px 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .search-icon,
+.clear-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-icon {
+  display: none;
+}
+
+.search-form input:not(:placeholder-shown) ~ .search-icon {
+  display: none; /* Ẩn icon tìm kiếm khi có dữ liệu */
+}
+
+.search-form input:not(:placeholder-shown) ~ .clear-icon {
+  display: flex; /* Hiển thị icon xóa khi có dữ liệu */
+}
+
+#search-results {
+  position: absolute;
+  top: 100%; /* Position below the input field */
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px; /* Rounded corners for the results dropdown */
+  max-height: 200px; /* Maximum height for results list */
+  overflow-y: auto; /* Scrollable if content overflows */
+  z-index: 10; /* Ensure results dropdown is above other content */
+}
+
+#results-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#results-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee; /* Divider between results */
+}
+
+#results-list li:last-child {
+  border-bottom: none; /* Remove border from last item */
+}
+
+#results-list img.thumbnail {
+  width: 70px; /* Thumbnail width */
+  /*height: 30px; /* Thumbnail height */
+  aspect-ratio: 16/9;
+  object-fit: cover; /* Ensure image covers the area */
+  margin-right: 10px; /* Space between image and text */
+}
+
+#results-list li:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}

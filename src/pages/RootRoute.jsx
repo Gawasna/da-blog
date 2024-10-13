@@ -10,21 +10,9 @@ function RootRoute() {
   return (
     <div className="main_wrapper">
       <Header></Header>
-      <div className="mainL">
-      <div className="bannerL">
-
-      </div>
-      <div className="featuredL">
-
-      </div>
-      <div className="navmL">
-
-      </div>
-      <div className="postsL">
-
-      </div>
-    </div>
-      
+      <Suspense>
+        <Outlet/>
+      </Suspense>
       <Footer></Footer>
     </div>
   );

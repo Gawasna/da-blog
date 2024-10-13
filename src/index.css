@@ -8,6 +8,7 @@
     --dev-stage-section: 3px #000000 dotted;
     --transL1: all .1 ease;
     --margin-small: 7.5px;
+    --contentW: 1200px;
 }
 
 * {
@@ -43,22 +44,17 @@ body[data-theme="dark"] {
 
 .header-container {
     position: relative;
-    /* height: var(--headerH);
-    color: var(--headerC);
-    background: var(--headerB); */
-    min-height: 30px;/*test*/
+    min-height: 48px;
     display: flex;
+    background-color: azure;
 }
 
 .header-left {
     display: flex;
     border-right: var(--header-border);
     align-items: center;
-    /* width: var(--navW); */
     width: var(--headlW);
     padding: 0 0 0 20px;
-    /* padding: 10px 0 0 10px; */
-    /* transition: var(--trans-1); */
     transition: var(--transL1);
 }
 
@@ -69,7 +65,7 @@ body[data-theme="dark"] {
 .header-right {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex: auto;
     padding: 0 25px;
 }
@@ -137,7 +133,7 @@ body[data-theme="dark"] {
     background-color: #da6600;
     transition: var(--transL1);
     border: 3px #000000 dotted;
-    z-index: 10;
+    /* z-index: 10; */
     /* position: fixed; */
     /* top: 0;*/
 }
