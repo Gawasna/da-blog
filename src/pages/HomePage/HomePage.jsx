@@ -2,6 +2,7 @@ import Banner from "../../component/layout/banner/banner";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import "./HomePage.css";
+import StandardButton from "@/component/common/Button";
 
 function HomePage() {
   const navigate = useNavigate();
@@ -122,57 +123,102 @@ function HomePage() {
                         <div className="Pthmb">
                         <img src="https://images-ng.pixai.art/images/orig/fbae40aa-dc75-481e-b643-dfb7f95896f9" alt="" id="thumbnailtest"/>
                         </div>
-                        <div className="pptime">thời gian</div>
-                        <div className="pCtg">category</div>
+                        <div className="infopp">
+                          <div className="pptime">Thu 5 2 th 9 2024</div>
+                          <div className="pCtg">/Cong nghe</div>
+                        </div>
                         <div className="pcCtn">
                           <div className="pTitle">Tiêu đề</div>
-                          <div className="pSmp">Nội dung</div>
                         </div>
+                        <div className="pSmp">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque, asperiores corporis labore deleniti, esse nisi culpa</div>
                       </article>
+
                       <article className="itm">
-                      <div className="pptime">thời gian</div>
-                        <div className="pCtg">category</div>
+                        <div className="infopp">
+                          <div className="pptime">thời gian</div>
+                          <div className="pCtg">category</div>
+                        </div>
                         <div className="pcCtn">
                           <div className="pTitle">Tiêu đề</div>
-                          <div className="pSmp">Nội dung</div>
                         </div>
+                        <div className="pSmp">Nội dung</div>
                       </article>
+
                       <article className="itm">
-                      <div className="pptime">thời gian</div>
-                        <div className="pCtg">category</div>
+                        <div className="infopp">
+                          <div className="pptime">thời gian</div>
+                          <div className="pCtg">category</div>
+                        </div>
                         <div className="pcCtn">
                           <div className="pTitle">Tiêu đề</div>
-                          <div className="pSmp">Nội dung</div>
                         </div>
+                        <div className="pSmp">Nội dung</div>
                       </article>
+
                       <article className="itm">
-                      <div className="pptime">thời gian</div>
-                        <div className="pCtg">category</div>
+                        <div className="infopp">
+                          <div className="pptime">thời gian</div>
+                          <div className="pCtg">category</div>
+                        </div>
                         <div className="pcCtn">
                           <div className="pTitle">Tiêu đề</div>
-                          <div className="pSmp">Nội dung</div>
                         </div>
+                        <div className="pSmp">Nội dung</div>
                       </article>
+
                       <article className="itm">
-                      <div className="pptime">thời gian</div>
-                        <div className="pCtg">category</div>
+                        <div className="infopp">
+                          <div className="pptime">thời gian</div>
+                          <div className="pCtg">category</div>
+                        </div>
                         <div className="pcCtn">
                           <div className="pTitle">Tiêu đề</div>
-                          <div className="pSmp">Nội dung</div>
                         </div>
+                        <div className="pSmp">Nội dung</div>
                       </article>
+
                       <article className="itm">
-                      <div className="pptime">thời gian</div>
-                        <div className="pCtg">category</div>
+                        <div className="infopp">
+                          <div className="pptime">thời gian</div>
+                          <div className="pCtg">category</div>
+                        </div>
                         <div className="pcCtn">
                           <div className="pTitle">Tiêu đề</div>
-                          <div className="pSmp">Nội dung</div>
                         </div>
+                        <div className="pSmp">Nội dung</div>
                       </article>
                     </div>
                   </div>
                   <div className="widget label" id="labelPP">
-
+                    <h3 className="btts">
+                      Label
+                    </h3>
+                    <div className="clistlabels">
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                      <div className="lbsz">
+                        <a className="">Cong nghe</a>
+                      </div>
+                    </div>
+                    <div className="loadMorelb">
+                      <StandardButton>LoadMore</StandardButton>
+                    </div>
                   </div>
                 </div>
               </div>

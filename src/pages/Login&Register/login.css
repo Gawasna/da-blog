@@ -1,0 +1,34 @@
+.lfbg {
+    width: 100%;
+    height: 700px;
+    /* Gradient blue-violet bg */
+    background: linear-gradient(135deg, #6a6aff, #be7dfb, #ffa8ff);
+}
+
+.frglw {
+    width: 500px;
+    height: 500px;
+    background: rgba(157, 141, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.3px);
+    -webkit-backdrop-filter: blur(3.3px);
+    border: 1px solid rgba(157, 141, 255, 0.3);
+}
+
+.lfbg {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+}
+
+.frglw {
+    margin: auto;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
