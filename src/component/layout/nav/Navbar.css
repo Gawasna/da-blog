@@ -1,0 +1,59 @@
+/* General Styles */
+.navbar {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: #f7f7f7;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .navbar-item:hover {
+    background-color: #eaeaea;
+  }
+  
+  .icon {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  /* Category Toggle Styles */
+  .category-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .category {
+    display: block;
+  }
+  
+  .sub-categories {
+    margin-left: 25px;
+    padding: 5px 0;
+  }
+  
+  .sub-category-item {
+    padding: 5px 0;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .sub-category-item:hover {
+    color: #007bff;
+  }
+  
+  .toggle-icon {
+    font-size: 12px;
+  }
+  

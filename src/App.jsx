@@ -7,35 +7,20 @@ import axios from 'axios';
 
 function App() {
 const [data, setData] = useState(null);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/posts/latest')
-      .then(response => {
-        setData(response.data);
-      })
-      .catch(error => {
-        console.error("Error fetching data: ", error);
-      });
-  }, []);
+// useEffect(() => {
+//     axios.get('/api/test')
+//       .then(response => {
+//         setData(response.data);
+//       })
+//       .catch(error => {
+//         setData('Connection failed');
+//         console.error("Error connecting to backend: ", error);
+//       });
+//   }, []);
   return (
-    <>
-      <div>
-        {data ? (
-          <div>
-            <h1>{data.title}</h1>
-            <p>{data.content}</p>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-        <div>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      </div>
-      </div>
       <div>
         <RouterProvider router={router}></RouterProvider>
       </div>
-    </>
   );
 }
 

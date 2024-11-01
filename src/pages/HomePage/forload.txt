@@ -1,0 +1,94 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Banner from "../../component/layout/banner/banner";
+import { useNavigate } from "react-router";
+import { NavLink } from "react-router-dom";
+import "./HomePage.css";
+import StandardButton from "@/component/common/Button";
+import NavBar from "@/component/layout/nav/Nav";
+
+function HomePage() {
+  const navigate = useNavigate();
+  const [articles, setArticles] = useState([]);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    loadArticles(page);
+  }, [page]);
+
+  const loadArticles = async (page) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/posts?page=${page}`);
+      setArticles((prevArticles) => [...prevArticles, ...response.data]);
+    } catch (error) {
+      console.error("Error loading articles: ", error);
+    }
+  };
+
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
+
+  const handleNavToRegister = (path) => {
+    navigate(path);
+  };
+
+  return (
+    <div className="mainL">
+      <div className="navmL">
+        <NavBar />
+      </div>
+      <div className="blogCtn">
+        <div className="secBIn">
+          <div className="blogM">
+            <main className="blogItm mainbar">
+              <div className="sldO section">
+                <img src="https://images-ng.pixai.art/images/orig/c2670750-6d09-4dc5-bde2-1bdb9417cfc5" alt="" id="bannertest" />
+              </div>
+              <div className="section" id="main-widget">
+                <div className="widget Blog" id="Blog1">
+                  <div className="blogtitle hm">
+                    <h3 className="btts">Bài đăng mới nhất</h3>
+                  </div>
+                  <div className="blogList">
+                    {articles.map((article, index) => (
+                      <article className="ntry" key={index}>
+                        <div className="Pthmb">
+                          <a className="thmb">
+                            <img className="imgThm" src={article.thumbnail} alt="" />
+                          </a>
+                        </div>
+                        <div className="plcCtn">
+                          <div className="plCtg">
+                            <div className="plictg">
+                              <a href="/">{article.category}</a>
+                            </div>
+                          </div>
+                          <h2 className="pltl">
+                            <a href="/">{article.title}</a>
+                          </h2>
+                          <div className="pSmp">{article.summary}</div>
+                          <div className="pptime">
+                            <time dateTime="">{article.date}</time>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                  <div className="blogPage">
+                    <a href="#" onClick={handleLoadMore}>Tải thêm bài viết</a>
+                  </div>
+                </div>
+              </div>
+            </main>
+            <aside className="blogItm sidebar">
+              {/* Sidebar content */}
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default HomePage;

@@ -3,6 +3,7 @@ import RootRoute from "@/pages/RootRoute";
 import HomePage from "@/pages/HomePage/HomePage";
 import Login from "@/pages/Login&Register/Login";
 import Register from "@/pages/Login&Register/Register";
+import TestConnection from "@/test/TestConnection";
 
 const router = createBrowserRouter([
     {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
               element: <></>,
             },
           ],
-        }
+        },
+        {
+          path: "/test-connection",
+          element: <TestConnection></TestConnection>, // Thêm route cho TestConnection
+        },
       ],
     }
   ]);
