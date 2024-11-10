@@ -1,5 +1,8 @@
 :root {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-1: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-1);
+    --font-2: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    --font-3: 'Open Sans", sans-serif';
     --min-height-header: 30px;
     --header-height: 50px;
     --headlW: 250px;
@@ -9,6 +12,16 @@
     --transL1: all .1 ease;
     --margin-small: 7.5px;
     --contentW: 1200px;
+    --small-text-margin: .3 rem;
+    --dark-mode-text: #ffffff;
+    --light-mode-text: #000000;
+    --dark-mode-bg: #343a40;
+    --light-mode-bg: #ffffff;
+    
+}
+
+.pptime {
+    margin-top: var(--small-text-margin);
 }
 
 * {

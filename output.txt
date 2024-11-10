@@ -1,0 +1,105 @@
+├── .vscode
+│   └── settings.json
+├── public
+│   ├── images
+│   │   ├── 1.jpg
+│   │   ├── 2.png
+│   │   └── 3.jpg
+│   ├── sucrose.png
+│   └── vite.svg
+├── src
+│   ├── api
+│   │   └── api.js
+│   ├── assets
+│   │   ├── css
+│   │   │   └── login.css
+│   │   ├── 1355035.jpeg
+│   │   ├── grady.webp
+│   │   ├── loor.gif
+│   │   └── react.svg
+│   ├── component
+│   │   ├── common
+│   │   │   ├── BackToTopBtn.jsx
+│   │   │   ├── Button.jsx
+│   │   │   ├── loading.jsx
+│   │   │   ├── scrolltop.jsx
+│   │   │   └── Textfield.jsx
+│   │   └── layout
+│   │       ├── banner
+│   │       │   ├── banner.css
+│   │       │   └── banner.jsx
+│   │       ├── cmt
+│   │       │   └── Comment.jsx
+│   │       ├── footer
+│   │       │   ├── Footer.css
+│   │       │   └── Footer.jsx
+│   │       ├── ftp
+│   │       │   ├── PAside.jsx
+│   │       │   └── posts.js
+│   │       ├── header
+│   │       │   ├── b.css
+│   │       │   ├── data.json
+│   │       │   ├── Header.css
+│   │       │   ├── Header.jsx
+│   │       │   └── SearchForm.jsx
+│   │       ├── nav
+│   │       │   ├── Nav.jsx
+│   │       │   └── Navbar.css
+│   │       ├── pl
+│   │       ├── rcmt
+│   │       └── sg
+│   ├── css
+│   │   ├── Home.css
+│   │   └── login.css
+│   ├── handler
+│   ├── pages
+│   │   ├── HomePage
+│   │   │   ├── forload.txt
+│   │   │   ├── HomePage.css
+│   │   │   └── HomePage.jsx
+│   │   ├── Login&Register
+│   │   │   ├── api.js
+│   │   │   ├── congrat.jsx
+│   │   │   ├── ẻ
+│   │   │   ├── loading.jsx
+│   │   │   ├── login.css
+│   │   │   ├── Login.jsx
+│   │   │   ├── popup.jsx
+│   │   │   └── Register.jsx
+│   │   ├── Posts
+│   │   │   ├── posts
+│   │   │   │   ├── 1.md
+│   │   │   │   ├── 2.md
+│   │   │   │   └── 3.md
+│   │   │   ├── thumbnails
+│   │   │   │   ├── 1.png
+│   │   │   │   ├── 2.png
+│   │   │   │   ├── 3.png
+│   │   │   │   └── 4.png
+│   │   │   ├── Post.jsx
+│   │   │   └── PostDetail.jsx
+│   │   ├── root.css
+│   │   └── RootRoute.jsx
+│   ├── redux
+│   │   ├── courseSlice.js
+│   │   └── store.js
+│   ├── routes
+│   │   └── route.config.jsx
+│   ├── test
+│   │   └── TestConnection.jsx
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .env
+├── .gitattributes
+├── .gitignore
+├── eslint.config.js
+├── index.html
+├── jsconfig.json
+├── Lay_cay_thu_muc.ps1
+├── output.txt
+├── package-lock.json
+├── package.json
+├── README.md
+├── vite.config.js

@@ -1,34 +1,105 @@
+.tlt.login {
+    text-align: center;
+    /*intext image bg*/
+    background-image: url('/path/to/your/image.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Background gradient */
 .lfbg {
-    width: 100%;
-    height: 700px;
-    /* Gradient blue-violet bg */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
     background: linear-gradient(135deg, #6a6aff, #be7dfb, #ffa8ff);
 }
 
+/* Centering the login form */
 .frglw {
-    width: 500px;
-    height: 500px;
-    background: rgba(157, 141, 255, 0);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(3.3px);
-    -webkit-backdrop-filter: blur(3.3px);
-    border: 1px solid rgba(157, 141, 255, 0.3);
-}
-
-.lfbg {
     display: flex;
-    align-items: center;
-    justify-items: center;
     justify-content: center;
-}
-
-.frglw {
-    margin: auto;
-}
-
-.login-container {
-    display: flex;
-    flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Login form container */
+.login-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Form group styling */
+.form-group {
+    margin-bottom: .7rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Error message styling */
+.invalid-feedback {
+    display: hidden;
+    color: #ff6b6b;
+    margin-top: 0.2rem;
+    font-size: smaller;
+    margin-left: .2rem;
+}
+
+/* General error message */
+.error {
+    color: #ff6b6b;
+    margin-bottom: 1rem;
+}
+
+/* Button styling */
+.button.login {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #0072ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #005bb5;
+}
+
+/* Link styling */
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 1.5rem;
+    }
 }

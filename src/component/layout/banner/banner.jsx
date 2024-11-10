@@ -1,43 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/autoplay";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "./banner.css";
+import 'swiper/css/pagination';
+import '../../css/HomePage.css';
+import './banner.css';
+import { getBanners } from '@/pages/Posts/api';
 
-const banner = [
-  { imageUrl: "http://https://i.ytimg.com/vi/KBgRUHG6pHU/maxresdefault.jpg", alt:"Banner 1", title:"Tes1", description: "none"},
-  { imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXyxjZh3tZqJhDhNgYJzNRdDegf09kwZ9SIA&s", alt:"Banner 2", title:"Tes2", description: "none"},
-  { imageUrl: "https://i.gzn.jp/img/2024/05/01/sawaratsuki-kawaii-logo/sawaratsuki_kawaii_uwu_logo_04_m.png", alt:"Banner 3", title:"Tes3", description: "none"},
-]
+export default function Banner() {
+  const [banners, setBanners] = useState([]); 
 
-const Banner = ({ banners }) => {
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const data = await getBanners();
+        setBanners(data); 
+      } catch (error) {
+        console.error('Error fetching banners:', error);
+      }
+    };
+    
+    fetchBanners();
+  }, []);
+
   return (
-    <div className="banner-slide">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
-        loop
+    <>
+      <Swiper 
+        className='banner swiper-container'
+        spaceBetween={0}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Autoplay, Pagination, Navigation]}
       >
-        {banners.map((banner, index) => (
-          <SwiperSlide key={index}>
-            <div className="slide-content">
-              <img src={banner.imageUrl} alt={banner.alt} className="slide-image" />
-              <div className="slide-text">
-                <h2>{banner.title}</h2>
-                <p>{banner.description}</p>
-              </div>
-            </div>
+        {banners.map((banner) => (
+          <SwiperSlide key={banner.id}>
+            <img src={banner.new} alt={`Banner ${banner.id}`} />
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </>
   );
-};
-
-export default Banner;
+}

@@ -22,6 +22,12 @@ section:not(.no-items), .blogCont .widget:not(:first-child) {
     margin-top: 7.5px;
 }
 
+#testbn {
+    width: 855px;
+    max-height: 400px;
+    height: 400px;
+}
+
 .widget .btts {
     margin: 7.5px 0 5px;
     font-size: 15px;
@@ -185,6 +191,7 @@ section:not(.no-items), .blogCont .widget:not(:first-child) {
     width: calc(var(--sideW) + 25px);
     margin: 0;
     border: 1px double violet;
+    justify-content: center;
 }
 
 .sidebar .sideIn {

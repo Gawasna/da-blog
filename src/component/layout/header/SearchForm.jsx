@@ -1,36 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
-import data from "./data.json";
+import { liveSearching } from "../../../pages/Posts/api";
+import debounce from "./debounce";
+import axios from "axios";
 
-// Dữ liệu mẫu  
-  const SearchForm = () => {
-    const [query, setQuery] = useState("");
-    const [results, setResults] = useState([]);
-    const [showResults, setShowResults] = useState(false);
-  
-    const handleInputChange = (e) => {
-      const value = e.target.value;
-      setQuery(value);
-  
-      if (value.length > 0) {
-        // Tìm kiếm trong data nếu nhập từ 1 ký tự trở lên
-        const filteredResults = data.filter((item) =>
-          item.title.toLowerCase().includes(value.toLowerCase())
-        );
-        setResults(filteredResults);
-        setShowResults(filteredResults.length > 0);
-      } else {
-        setResults([]);
-        setShowResults(false);
-      }
-    };
-  
-    const clearSearch = () => {
-      setQuery("");
+const SearchForm = () => {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
+
+  const fetchSearchResults = async (searchQuery) => {
+    try {
+      const data = await liveSearching(searchQuery);
+      setResults(data);
+      setShowResults(data.length > 0);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
+
+  const debouncedFetchSearchResults = useCallback(debounce(fetchSearchResults, 300), []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+
+    if (value.length > 0) {
+      debouncedFetchSearchResults(value);
+    } else {
       setResults([]);
       setShowResults(false);
-    };  
+    }
+  };
+
+  const clearSearch = () => {
+    setQuery("");
+    setResults([]);
+    setShowResults(false);
+  };
 
   return (
     <form className="search-form">
@@ -56,7 +64,7 @@ import data from "./data.json";
           <ul id="results-list">
             {results.map((result) => (
               <li key={result.post_id}>
-                <img src={result.thumbnail} alt={result.title} className="thumbnail" />
+                <img src={result.image_path} alt={result.title} className="thumbnail" />
                 <span>{result.title}</span>
               </li>
             ))}
