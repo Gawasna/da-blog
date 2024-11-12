@@ -3,6 +3,7 @@ import { login } from "./api.js";
 import { Link, useNavigate } from "react-router-dom";
 import { validate, IsNotEmpty, IsEmail } from "class-validator";
 import Loading from "./Loading";
+
 class LoginData {
   @IsNotEmpty({ message: "Please enter your email" })
   @IsEmail({}, { message: "Invalid email format" })
@@ -36,23 +37,37 @@ const Login = () => {
       }, {});
       setFormErrors(errorMessages);
       setIsLoading(false);
-      return; // Không tiếp tục thực hiện đăng nhập nếu có lỗi từ validation
+      return;
     }
 
-    setFormErrors({}); // Reset lỗi form nếu không có lỗi validation
+    setFormErrors({});
 
     try {
-      // Call API để thực hiện đăng nhập
-      await login(logindata);
-      navigate("/congrat"); // Điều hướng đến trang sau khi đăng nhập thành công
+      // Call API to login and get token
+      const response = await login(logindata);
+      
+      if (response.token) {
+        // Store the token in localStorage
+        localStorage.setItem("token", response.token);
+
+        // Update login state in a context or global state if needed
+        // navigate to the main page or dashboard after login success
+        navigate("/congrat");
+      } else {
+        // Handle case where response does not contain token
+        setFormErrors((prevErrors) => ({
+          ...prevErrors,
+          general: "Login failed. Invalid credentials."
+        }));
+      }
     } catch (error) {
-      // Nếu có lỗi từ server (ví dụ: tài khoản/mật khẩu sai), chỉ hiển thị lỗi chung ở đây
+      // Show error message based on response (if available)
       setFormErrors((prevErrors) => ({
         ...prevErrors,
-        general: "Login failed. Please try again."
+        general: error.response?.data?.message || "Login failed. Please try again."
       }));
     } finally {
-      setIsLoading(false); // Đảm bảo loading được tắt dù thành công hay lỗi
+      setIsLoading(false); // Ensure loading spinner is turned off
     }
   };
 
@@ -93,7 +108,7 @@ const Login = () => {
 
             <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
 
-            {/* Hiển thị lỗi chung nếu có lỗi từ server */}
+            {/* Display general error if server login fails */}
             {formErrors.general && (
               <div className="error">{formErrors.general}</div>
             )}
