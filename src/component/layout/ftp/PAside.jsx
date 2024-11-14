@@ -1,6 +1,6 @@
 import React from 'react';
 import StandardButton from "@/component/common/Button";
-import "../../css/HomePage.css";
+import "../../css/HomePage.css";import "../ftp/PAside.css";
 const PopularSide = () => {
     return (
       <aside className="blogItm sidebar">
@@ -85,28 +85,30 @@ const PopularSide = () => {
                     <h3 className="btts">
                       Label
                     </h3>
+                    <div style={{padding: '10px'}}>
                     <div className="clistlabels">
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
                       <div className="lbsz">
-                        <a className="">Cong nghe</a>
+                        <a className="Cat">Cong nghe</a>
                       </div>
+                    </div>
                     </div>
                     <div className="loadMorelb">
                       <StandardButton>LoadMore</StandardButton>
