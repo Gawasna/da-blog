@@ -1,0 +1,14 @@
+.Cat{
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    opacity: .7;
+}
+.loadMorelb{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+.loadMorelb .homepage{
+    display: flex;
+}
