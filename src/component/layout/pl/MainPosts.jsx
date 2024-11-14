@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import "../../css/HomePage.css";
 import Banner from '../banner/banner';
-import '../../../pages/Posts/api.js'
+import '../../../pages/Posts/api.js';
 import { getLatestPosts } from '../../../pages/Posts/api.js';
+import "../ftp/PAside.css";
+import StandardButton from '@/component/common/Button';
 
 
 function MainPosts() {
@@ -203,8 +205,8 @@ function MainPosts() {
             ))}
           </div>
 
-          <div className="blogPage">
-          <a href="#" onClick={fetchPosts}>Tải thêm bài viết</a>
+          <div className="loadMorelb">
+          <a href="#" onClick={fetchPosts}><StandardButton>Tải thêm bài viết</StandardButton></a>
           </div>
         </div>
       </div>
