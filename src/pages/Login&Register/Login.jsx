@@ -81,6 +81,7 @@ const Login = () => {
             <div className="form-group">
               <label htmlFor="email">Email:</label>
               <input
+                placeholder="Enter your Email"
                 type="email"
                 name="email"
                 value={logindata.email}
@@ -95,6 +96,7 @@ const Login = () => {
             <div className="form-group">
               <label htmlFor="password">Password:</label>
               <input
+                placeholder="Enter your Password"
                 type="password"
                 name="password"
                 value={logindata.password}
@@ -106,7 +108,7 @@ const Login = () => {
               )}
             </div>
 
-            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
+            <Link to="/forgotpassword" className="forgot-password-link">Forgot Password?</Link>
 
             {/* Display general error if server login fails */}
             {formErrors.general && (
@@ -115,7 +117,7 @@ const Login = () => {
 
             <button className="button login is-white" type="submit">Login</button>
           </form>
-          <Link to="/signup">Don't have an account? Sign up</Link>
+          <label>Don't have an account?</label><Link to="/signup"> Register</Link>
         </div>
       </div>
     </div>
