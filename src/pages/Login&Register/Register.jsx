@@ -1,5 +1,16 @@
 import React, { useState } from "react";
 import "./login.css";
+import { login } from "./api.js";
+import { Link, useNavigate  } from "react-router-dom";
+
+class LoginData {
+  @IsNotEmpty({ message: "Please enter your email" })
+  @IsEmail({}, { message: "Invalid email format" })
+  email = "";
+
+  @IsNotEmpty({ message: "Please enter your password" })
+  password = "";
+}
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -16,11 +27,12 @@ const Register = () => {
     <div className="lfbg">
       <div className="frglw">
       <div className="login-container">
-        <h2>Register</h2>
+        <h2 className="tlt login">Register</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input
+              placeholder="Enter your Email"
               type="email"
               id="email"
               value={email}
@@ -31,6 +43,7 @@ const Register = () => {
           <div className="form-group">
             <label htmlFor="password">Password:</label>
             <input
+              placeholder="Enter your Password"
               type="password"
               id="password"
               value={password}
@@ -38,8 +51,9 @@ const Register = () => {
               required
             />
           </div>
-          <button type="submit">Login</button>
+          <button className="button login is-white" type="submit">Login</button>
         </form>
+        <label>Already have an account?</label><Link to="/Login"> Login</Link>
       </div>
       </div>
     </div>
