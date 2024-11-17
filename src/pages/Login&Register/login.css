@@ -12,7 +12,10 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
-    background: linear-gradient(135deg, #6a6aff, #be7dfb, #ffa8ff);
+    background-image: url(https://images8.alphacoders.com/138/1382594.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 /* Centering the login form */
@@ -78,14 +81,14 @@
     padding: 0.75rem;
     border: none;
     border-radius: 5px;
-    background-color: #0072ff;
+    background-color: rgb(177, 219, 239);
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: #005bb5;
+    background-color: #8cdae45d;
 }
 
 /* Link styling */
