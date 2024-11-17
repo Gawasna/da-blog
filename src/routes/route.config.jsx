@@ -9,7 +9,7 @@ import Post from "@/pages/Posts/Post";
 import PostDetail from "@/pages/Posts/PostDetail";
 import Comment from "@/component/layout/cmt/Comment";
 import PopularSide from "@/component/layout/ftp/PAside";
-
+import ForgotPassword from "@/pages/Login&Register/ForgotPassword";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <HomePage />,
+      },
+      {
+        path: "/forgotpassword",
+        element: <ForgotPassword />,
       },
       {
         path: "/login",
