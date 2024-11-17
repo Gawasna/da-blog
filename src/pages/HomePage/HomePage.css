@@ -259,7 +259,7 @@ section:not(.no-items), .blogCont .widget:not(:first-child) {
 .itm {
     padding-top: 7.5px;
     padding-bottom: 7.5px;
-    border: 1px dotted tomato;
+    /* border: 1px dotted tomato; */
 }
 
 .clistlabels {
