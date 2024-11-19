@@ -62,9 +62,9 @@ const SearchForm = () => {
       {showResults && (
         <span id="search-results">
           <ul id="results-list">
-            {results.map((result) => (
-              <li key={result.post_id}>
-                <img src={result.image_path} alt={result.title} className="thumbnail" />
+            {results.map(result => (
+              <li key={result.id}>
+                <img src={`http://localhost:3000/api/post/post/${result.id}/image?width=75`} alt={result.title} className="thumbnail" />
                 <span>{result.title}</span>
               </li>
             ))}

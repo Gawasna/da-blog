@@ -7,9 +7,9 @@ export const getBanners = async (credentials) => {
     return response.data;
 }
 
-export const getLatestPosts = async (offset = 0, limit = 6) => {
+export const getLatestPosts = async (page = page, limit = limit) => {
     const response = await axios.get(`${APP_POST_API}/latest`, {
-        params: { offset, limit }
+        params: { page, limit }
     });
     return response.data;
 }

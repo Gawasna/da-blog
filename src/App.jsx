@@ -7,16 +7,6 @@ import axios from 'axios';
 
 function App() {
 const [data, setData] = useState(null);
-// useEffect(() => {
-//     axios.get('/api/test')
-//       .then(response => {
-//         setData(response.data);
-//       })
-//       .catch(error => {
-//         setData('Connection failed');
-//         console.error("Error connecting to backend: ", error);
-//       });
-//   }, []);
   return (
       <div>
         <RouterProvider router={router}></RouterProvider>

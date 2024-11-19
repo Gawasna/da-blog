@@ -38,7 +38,7 @@ export default function Banner() {
         }}
         modules={[Autoplay, Pagination, Navigation]}
       >
-        {banners.map((banner) => (
+        {Array.isArray(banners) && banners.map((banner) => (
           <SwiperSlide key={banner.id}>
             <img src={banner.new} alt={`Banner ${banner.id}`} />
           </SwiperSlide>

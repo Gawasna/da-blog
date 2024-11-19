@@ -37,8 +37,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/post",
-        element: <><PostDetail markdownUrl="https://raw.githubusercontent.com/Gawasna/be-dablog/master/README.md" />
-        <PopularSide /></>
+        element: 
+          <PostDetail markdownUrl="https://raw.githubusercontent.com/Gawasna/be-dablog/master/README.md" />
       },
       {
         path: "/test-connection",

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./login.css";
 import { login } from "./api.js";
 import { Link, useNavigate  } from "react-router-dom";
+import { IsEmail, IsNotEmpty } from "class-validator";
 
 class LoginData {
   @IsNotEmpty({ message: "Please enter your email" })
