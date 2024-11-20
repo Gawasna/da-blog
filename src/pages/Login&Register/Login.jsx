@@ -28,7 +28,6 @@ const Login = () => {
     event.preventDefault();
     setIsLoading(true);
 
-    // Validate input fields (client-side validation)
     const errors = await validate(logindata);
     if (errors.length > 0) {
       const errorMessages = errors.reduce((acc, error) => {
@@ -43,31 +42,27 @@ const Login = () => {
     setFormErrors({});
 
     try {
-      // Call API to login and get token
       const response = await login(logindata);
       
-      if (response.token) {
-        // Store the token in localStorage
-        localStorage.setItem("token", response.token);
-
-        // Update login state in a context or global state if needed
-        // navigate to the main page or dashboard after login success
-        navigate("/congrat");
+      if (response.access_Token) {
+        localStorage.setItem("access_token", response.access_Token);
+        localStorage.setItem("refresh_token", response.refresh_Token);
+    
+        navigate("/");
+        
       } else {
-        // Handle case where response does not contain token
         setFormErrors((prevErrors) => ({
           ...prevErrors,
           general: "Login failed. Invalid credentials."
         }));
       }
     } catch (error) {
-      // Show error message based on response (if available)
       setFormErrors((prevErrors) => ({
         ...prevErrors,
-        general: error.response?.data?.message || "Login failed. Please try again."
+        general: error.message || "An error occurred during login."
       }));
     } finally {
-      setIsLoading(false); // Ensure loading spinner is turned off
+      setIsLoading(false); 
     }
   };
 

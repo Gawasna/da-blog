@@ -6,7 +6,7 @@ import { getLatestPosts } from '../../../pages/Posts/api.js';
 import "../ftp/PAside.css";
 import StandardButton from '@/component/common/Button';
 
-function MainPosts() {
+function MainPosts({ showBanner = true }) {
   // Initialize states
   const [page, setPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
@@ -115,6 +115,11 @@ function MainPosts() {
 
   return (
     <main className="blogItm mainbar">
+      {showBanner && (
+        <div className="sldO section">
+          <Banner />
+        </div>
+      )}
       <div className="section" id="main-widget">
         <div className="widget Blog" id="Blog1">
           <div className="blogtitle hm">

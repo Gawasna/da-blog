@@ -27,6 +27,10 @@ const PostDetail = ({ markdownUrl }) => {
         <div className="secBIn">
           <div className="blogM">
             <div className="contentctn">
+              <img src="https://media1.tenor.com/m/n2-u2ZdOyqwAAAAd/police-canthitg.gif" alt="" srcset="" />
+              <h3>
+                Title đấy
+              </h3>
             <div className="markdown-body">
               <ReactMarkdown
                 children={content}

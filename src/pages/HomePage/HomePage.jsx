@@ -23,7 +23,7 @@ function HomePage() {
       <div className="blogCtn">
         <div className="secBIn">
           <div className="blogM">
-            <MainPosts/>
+          <MainPosts showBanner={true} />
               <PopularSide/>
           </div>
         </div>

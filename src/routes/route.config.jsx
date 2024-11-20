@@ -10,6 +10,8 @@ import PostDetail from "@/pages/Posts/PostDetail";
 import Comment from "@/component/layout/cmt/Comment";
 import PopularSide from "@/component/layout/ftp/PAside";
 import ForgotPassword from "@/pages/Login&Register/ForgotPassword";
+import MainPosts from "@/component/layout/pl/MainPosts";
+import Dashboard from "@/pages/Admin/Dashboard";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,13 +39,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/post",
-        element: 
-          <PostDetail markdownUrl="https://raw.githubusercontent.com/Gawasna/be-dablog/master/README.md" />
+        element: (
+          <>
+            <PostDetail markdownUrl="https://raw.githubusercontent.com/Gawasna/be-dablog/master/README.md"/>
+            <MainPosts showBanner={false} />
+          </>
+        )
       },
       {
         path: "/test-connection",
         element: <TestConnection />,
       },
+      {
+        path: "admin/dashboard",
+        element: <Dashboard/>,
+      }
     ],
   },
 ]);

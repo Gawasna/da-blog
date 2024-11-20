@@ -20,3 +20,10 @@ export const liveSearching = async (query) => {
     });
     return response.data;
 }
+
+export const getCategories = async (skip = 0, take = 3) => {
+    const response = await axios.get(`/api/categories`, {
+        params: { skip, take }
+    });
+    return response.data;
+}
