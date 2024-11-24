@@ -11,12 +11,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/compatible": "^5.1.3",
     "@ant-design/icons": "^5.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@reduxjs/toolkit": "^2.2.8",
-    "antd": "^5.22.1",
+    "antd": "^5.22.2",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
     "bulma": "^1.0.2",
@@ -33,6 +34,7 @@
     "rehype-highlight": "^7.0.1",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
+    "styled-components": "^6.1.13",
     "swiper": "^11.1.14",
     "vite-aliases": "^0.11.7"
   },

@@ -1,51 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faMoon, faSun, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
+import { Menu, Dropdown, Button } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import "./b.css";
 import SearchForm from "./SearchForm";
+import { AuthContext } from "./AuthContext";
 
 const Header = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [darkMode, setDarkMode] = useState(() => {
+    // Get initial state from sessionStorage
     const savedMode = sessionStorage.getItem("darkMode");
     return savedMode === "true";
   });
-  
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const toggleTheme = () => {
-    setDarkMode((prevMode) => {
-      const newMode = !prevMode;
-      sessionStorage.setItem("darkMode", newMode);
-      document.body.dataset.theme = newMode ? "dark" : "";
-      return newMode;
-    });
-  };
 
-  const openAction = () => {
-    setUserMenuOpen((prevOpen) => !prevOpen); 
-  };
-
+  // Apply theme on mount and when darkMode changes
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest(".user-menu") && !event.target.closest(".user-button")) {
-        setUserMenuOpen(false); 
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
+    // Apply theme to body
     document.body.dataset.theme = darkMode ? "dark" : "";
+    // Save to sessionStorage
+    sessionStorage.setItem("darkMode", darkMode);
   }, [darkMode]);
 
-  const navigate = useNavigate();
-  const handleNav = (path) => {
-    navigate(path);
+  const toggleTheme = () => {
+    setDarkMode(prevMode => !prevMode);
   };
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
+
+  const userMenu = (
+    <Menu>
+      {isLoggedIn ? (
+        <Menu.Item key="logout" onClick={handleLogout}>
+          Logout
+        </Menu.Item>
+      ) : (
+        <>
+          <Menu.Item key="login">
+            <NavLink to="/login">Login</NavLink>
+          </Menu.Item>
+          <Menu.Item key="signup">
+            <NavLink to="/signup">Sign Up</NavLink>
+          </Menu.Item>
+        </>
+      )}
+    </Menu>
+  );
 
   return (
     <header>
@@ -67,18 +77,10 @@ const Header = () => {
             <SearchForm></SearchForm>
           </div>
           <div className="headerM">
-            <button className="theme-button" onClick={toggleTheme}>
-              <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
-            </button>
-            <button className="user-button" onClick={openAction}>
-              <FontAwesomeIcon icon={faUser} />
-            </button>
-            {userMenuOpen && (
-              <div className="user-menu">
-                <NavLink to={"/login"} onClick={() => handleNav("/login")}>Login</NavLink>
-                <NavLink to={"/signup"} onClick={() => handleNav("/signup")}>Sign Up</NavLink>
-              </div>
-            )}
+            <Button className="theme-button" onClick={toggleTheme} icon={<FontAwesomeIcon icon={darkMode ? faSun : faMoon} />} />
+            <Dropdown overlay={userMenu} trigger={['click']} placement="bottomRight">
+              <Button className="user-button" icon={<FontAwesomeIcon icon={faUser} />} />
+            </Dropdown>
           </div>
         </div>
       </div>

@@ -4,14 +4,17 @@ import HomePage from "@/pages/HomePage/HomePage";
 import Login from "@/pages/Login&Register/Login";
 import Register from "@/pages/Login&Register/Register";
 import TestConnection from "@/test/TestConnection";
-import Congrat from "@/pages/Login&Register/Congrat";
 import Post from "@/pages/Posts/Post";
 import PostDetail from "@/pages/Posts/PostDetail";
-import Comment from "@/component/layout/cmt/Comment";
 import PopularSide from "@/component/layout/ftp/PAside";
 import ForgotPassword from "@/pages/Login&Register/ForgotPassword";
+import VerifyOTP from "@/pages/Login&Register/VerifyOTP";
 import MainPosts from "@/component/layout/pl/MainPosts";
 import Dashboard from "@/pages/Admin/Dashboard";
+import PostList from "@/component/layout/pl/PostList";
+import CommentSection from "@/component/layout/cmt/Comment";
+import ReactMarkdown from 'react-markdown';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +29,10 @@ const router = createBrowserRouter([
         element: <ForgotPassword />,
       },
       {
+        path: "/verify-otp",
+        element: <VerifyOTP />,
+      },
+      {
         path: "/login",
         element: <Login />,
       },
@@ -34,15 +41,22 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/congrat",
-        element: <Congrat />,
-      },
-      {
         path: "/post",
         element: (
           <>
-            <PostDetail markdownUrl="https://raw.githubusercontent.com/Gawasna/be-dablog/master/README.md"/>
-            <MainPosts showBanner={false} />
+            <PostDetail markdownUrl="https://raw.githubusercontent.com/Gawasna/Multimedia-archive/refs/heads/main/dablog/mdcontent/laykeynodemailer.md"/>
+            <CommentSection/>
+            <PostList />
+          </>
+        )
+      },
+      {
+        path: "/post/:postId",
+        element: (
+          <>
+            <PostDetail />
+            <CommentSection/>
+            <PostList />
           </>
         )
       },
@@ -53,7 +67,7 @@ const router = createBrowserRouter([
       {
         path: "admin/dashboard",
         element: <Dashboard/>,
-      }
+      },
     ],
   },
 ]);

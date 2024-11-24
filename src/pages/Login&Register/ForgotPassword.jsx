@@ -1,55 +1,77 @@
-import React, { useState } from "react";
-import "./login.css";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Form, Input, Button, message as antMessage } from 'antd';
+import { MailOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { requestOtp } from '@/pages/Login&Register/api';
 
-const Register = () => {
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState(''); 
-  const handleSubmit = async (e) => { 
-    e.preventDefault();
-    console.log(email); 
-    setMessage('If your email is registered, you will receive a password reset link.'); };
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleResetPassword = async () => {
+    setIsLoading(true);
+    try {
+      await requestOtp(email);
+      antMessage.success('Password reset link sent to your email!');
+      navigate('/verify-otp', { state: { email } });
+    } catch (error) {
+      antMessage.error('Failed to send password reset link. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="lfbg">
-      <div className="frglw">
-      <div className="login-container">
-        <h2 className="tlt login">Reset Password</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              placeholder="Enter your Email"
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '90vh',
+        background: '#f0f2f5',
+      }}
+    >
+      <div
+        style={{
+          width: 400,
+          padding: 24,
+          background: '#fff',
+          borderRadius: 8,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+        }}
+      >
+        <h2 style={{ textAlign: 'center', marginBottom: 24 }}>Forgot Password</h2>
+        <Form layout="vertical" onFinish={handleResetPassword}>
+          <Form.Item
+            label="Email"
+            validateStatus={email ? '' : 'error'}
+            help={!email && 'Please enter your email'}
+          >
+            <Input
               type="email"
-              id="email"
+              placeholder="Enter your Email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              onChange={handleEmailChange}
+              prefix={<MailOutlined />}
             />
-            <label>Verify code</label>
-            <input
-              placeholder="Enter your Verify code"
-              type="code"
-            />
-            <label>New password</label>
-            <input
-              placeholder="Enter your new password"
-              type="password"
-            />
-            <label>Confirm password</label>
-            <input
-              placeholder="Enter your new password"
-              type="password"
-            />
-          </div>
-          <button className="button login is-white" type="submit">Confirm</button>
-        </form>
-        <label>Remember your password?</label><Link to="/Login"> Login</Link>
-        <div><label>Don't have an account?</label><Link to="/signup"> Register</Link></div>
-      </div>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block loading={isLoading}>
+              Reset Password
+            </Button>
+          </Form.Item>
+        </Form>
+        <div style={{ textAlign: 'center' }}>
+          <Link to="/login">Back to Login</Link>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default ForgotPassword;

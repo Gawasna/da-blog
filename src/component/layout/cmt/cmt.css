@@ -1,0 +1,99 @@
+/* Comment section wrapper */
+.ant-list-header {
+  color: #24292f;
+  border-bottom-color: #d0d7de;
+}
+
+[data-theme="dark"] .ant-list-header {
+  color: #f0f6fc;
+  border-bottom-color: #30363d;
+}
+
+/* Comment styles */
+.ant-comment {
+  background-color: #ffffff;
+  color: #24292f;
+}
+
+[data-theme="dark"] .ant-comment {
+  background-color: #343a40;
+  color: #f0f6fc;
+}
+
+/* Comment author name */
+.ant-comment-content-author-name {
+  color: #24292f;
+}
+
+[data-theme="dark"] .ant-comment-content-author-name {
+  color: #f0f6fc;
+}
+
+/* Comment date */
+.ant-comment-content-detail {
+  color: #57606a;
+}
+
+[data-theme="dark"] .ant-comment-content-detail {
+  color: #9198a1;
+}
+
+/* TextArea input */
+.ant-input {
+  background-color: #ffffff;
+  color: #24292f;
+  border-color: #d0d7de;
+}
+
+[data-theme="dark"] .ant-input {
+  background-color: #21262d;
+  color: #f0f6fc;
+  border-color: #30363d;
+}
+
+/* Pagination */
+.ant-pagination-item {
+  background-color: #ffffff;
+  border-color: #d0d7de;
+}
+
+[data-theme="dark"] .ant-pagination-item {
+  background-color: #21262d;
+  border-color: #30363d;
+}
+
+.ant-pagination-item a {
+  color: #24292f;
+}
+
+[data-theme="dark"] .ant-pagination-item a {
+  color: #f0f6fc;
+}
+
+/* Placeholder styling for light theme */
+.ant-input::placeholder {
+  color: #8c959f;
+}
+
+/* Placeholder styling for dark theme */
+[data-theme="dark"] .ant-input::placeholder {
+  color: #6e7681;
+}
+
+/* For Firefox */
+.ant-input::-moz-placeholder {
+  color: #8c959f;
+}
+
+[data-theme="dark"] .ant-input::-moz-placeholder {
+  color: #6e7681;
+}
+
+/* For Chrome/Safari/Edge */
+.ant-input::-webkit-input-placeholder {
+  color: #8c959f;
+}
+
+[data-theme="dark"] .ant-input::-webkit-input-placeholder {
+  color: #6e7681;
+}

@@ -1,3 +1,26 @@
+/* In b.css or a new CSS file */
+.markdown-body {
+    /* Light theme default */
+    color: #24292f;
+    background-color: #ffffff;
+}
+
+[data-theme="dark"] .markdown-body {
+    /* Dark theme when data-theme="dark" */
+    color: #f0f6fc;
+    background-color: #343a40;
+}
+
+.pdi4 {
+    color: #24292f;
+    background-color: #ffffff;
+}
+
+[data-theme="dark"] .pdi4 {
+    color: #f0f6fc;
+    background-color: #343a40;
+}
+
 .contentctn {
     width: 900px;
     max-width: 905px;

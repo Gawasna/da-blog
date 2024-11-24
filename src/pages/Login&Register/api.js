@@ -4,33 +4,63 @@ const APP_AUTH_API = '/api/auth';
 const APP_POST_API = '/api/posts';
 
 export const login = async (credentials) => {
-  const response = await axios.post(`${APP_AUTH_API}/login`, credentials);
-  return response.data;
+  try {
+    const response = await axios.post(`${APP_AUTH_API}/login`, credentials);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const signup = async (userData) => {
-  const response = await axios.post(`${APP_AUTH_API}/signup`, userData);
-  return response.data;
+  try {
+    const response = await axios.post(`${APP_AUTH_API}/signup`, userData);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const logout = async () => {
-  const response = await axios.post(`${APP_AUTH_API}/logout`);
-  return response.data;
+  try {
+    const response = await axios.post(`${APP_AUTH_API}/logout`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const getCurrentUser = async () => {};
+export const getCurrentUser = async () => {
+  try {
+    // Add your implementation here
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getBanners = async (credentials) => {
-  const response = await axios.get(`${APP_POST_API}/banner`, credentials);
-  return response.data;
-}
-
-export const forgotPassword = async (email) => {
-  const response = await axios.post(`${APP_AUTH_API}/forgot-password`, { email });
-  return response.data;
+  try {
+    const response = await axios.get(`${APP_POST_API}/banner`, credentials);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
-export const resetPassword = async (token, password) => {
-  const response = await axios.post(`${APP_AUTH_API}/reset-password`, { token, password });
-  return response.data;
+export const requestOtp = async (email) => {
+  try {
+    const response = await axios.post(`${APP_AUTH_API}/request-otp`, { email });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyOtpAndResetPassword = async (email, otp, newPassword) => {
+  try {
+    const response = await axios.post(`${APP_AUTH_API}/verify-otp&reset-password`, { email, otp, newPassword });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };

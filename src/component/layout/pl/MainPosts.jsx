@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import "../../css/HomePage.css";
+import { Card, Row, Col, Button, Typography, Tag, Image } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import '../../css/HomePage.css'
 import Banner from '../banner/banner';
-import '../../../pages/Posts/api.js';
 import { getLatestPosts } from '../../../pages/Posts/api.js';
-import "../ftp/PAside.css";
-import StandardButton from '@/component/common/Button';
+import { useNavigate } from 'react-router-dom';
+
+const { Title, Paragraph, Text } = Typography;
 
 function MainPosts({ showBanner = true }) {
-  // Initialize states
+  // Keep existing state management code
+  const navigate = useNavigate();
   const [page, setPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
     return Number(savedPage) || 1;
@@ -25,12 +28,13 @@ function MainPosts({ showBanner = true }) {
   const limit = 6;
   const [loading, setLoading] = useState(false);
 
+  // Keep existing useEffect and function implementations
   // Check for new posts
   const checkForNewPosts = async () => {
     try {
       const newestPosts = await getLatestPosts(1, 1);
       const cachedPosts = localStorage.getItem('cachedPosts');
-      
+
       if (cachedPosts) {
         const parsedCachedPosts = JSON.parse(cachedPosts);
         if (newestPosts[0]?.id !== parsedCachedPosts[0]?.id) {
@@ -68,7 +72,7 @@ function MainPosts({ showBanner = true }) {
   // Initial load and check
   useEffect(() => {
     const controller = new AbortController();
-    
+
     const initializePosts = async () => {
       await checkForNewPosts();
       if (posts.length === 0) {
@@ -113,57 +117,72 @@ function MainPosts({ showBanner = true }) {
     setPage(prevPage => prevPage + 1);
   };
 
+  const handlePostClick = (id) => {
+    navigate(`/post/${id}`);
+  };
+
   return (
-    <main className="blogItm mainbar">
+    <div className="blogItm mainbar">
       {showBanner && (
         <div className="sldO section">
           <Banner />
         </div>
       )}
       <div className="section" id="main-widget">
-        <div className="widget Blog" id="Blog1">
-          <div className="blogtitle hm">
-            <h3 className="btts">Bài đăng mới nhất</h3>
-          </div>
-          <div className="blogList">
-            {posts.map((post) => (
-              <article className="ntry" key={post.id}>
-                <div className="Pthmb">
-                  <a className="thmb">
-                    <img className="imgThm" src={post.image_path} alt={post.title} />
+        <Title level={3} className="btts">Bài đăng mới nhất</Title>
+
+        <Row gutter={[24, 24]}>
+          {posts.map((post) => (
+            <Col xs={24} sm={12} lg={8} key={post.id}>
+              <Card
+                hoverable
+                cover={
+                  <Image
+                    alt={post.title}
+                    src={post.image_path}
+                    preview={false}
+                    className="imgThm"
+                    onClick={() => handlePostClick(post.id)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                }
+                className="ntry"
+                styles={{
+                  body: {
+                    padding: '0 5px 5px 5px',
+                    borderRadius: '0 0 8px 8px'
+                  }
+                }}
+              >
+                <Tag color="blue">{post.category.name}</Tag>
+                <Title level={4} ellipsis={{ rows: 2 }}>
+                  <a onClick={() => handlePostClick(post.id)} style={{ cursor: 'pointer' }}>
+                    {post.title}
                   </a>
-                </div>
-                <div className="plcCtn">
-                  <div className="plCtg">
-                    <div className="plictg">
-                      <a href="/">{post.category.name}</a>
-                    </div>
-                  </div>
-                  <h2 className="pltl">
-                    <a href="/">{post.title}</a>
-                  </h2>
-                  <div className="pSmp">
-                    {post.description}
-                  </div>
-                  <div className="pptime">
-                    <time dateTime={new Date(post.created_at).toISOString()}>
-                      {new Date(post.created_at).toLocaleDateString()}
-                    </time>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-          <div className="loadMorelb">
-            <a href="#" onClick={loadMorePosts}>
-              <StandardButton disabled={loading}>
-                {loading ? 'Đang tải...' : 'Tải thêm bài viết'}
-              </StandardButton>
-            </a>
-          </div>
+                </Title>
+                <Paragraph ellipsis={{ rows: 3 }} className="pSmp">
+                  {post.description}
+                </Paragraph>
+                <Text type="secondary">
+                  {new Date(post.created_at).toLocaleDateString()}
+                </Text>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <Button
+            type="primary"
+            size="large"
+            loading={loading}
+            onClick={loadMorePosts}
+          >
+            {loading ? 'Đang tải...' : 'Tải thêm bài viết'}
+          </Button>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

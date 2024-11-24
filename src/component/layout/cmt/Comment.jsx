@@ -1,85 +1,164 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { 
+  List, 
+  Avatar, 
+  Form, 
+  Button, 
+  Input,
+  Typography,
+  Pagination,
+  message
+} from 'antd';
+import { Comment } from '@ant-design/compatible';
+import styled from 'styled-components';
+import { AuthContext } from '../header/AuthContext';
+import { getPostComments, getPostCommentCount, addPostComment } from '@/pages/Posts/api';
+import { useParams } from 'react-router-dom';
+import "./cmt.css";
 
-function Comment() {
-    const [comments, setComments] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [newComment, setNewComment] = useState('');
-    const [isPosting, setIsPosting] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
+const { TextArea } = Input;
+const { Text } = Typography;
 
-    useEffect(() => {
-        // Fetch comments from an API or database
-        fetch('/api/comments')
-            .then(response => response.json())
-            .then(data => {
-                setComments(data);
-                setIsLoading(false);
-            })
-            .catch(err => {
-                setError('Failed to load comments');
-                setIsLoading(false);
-            });
-    }, []);
+const StyledCommentSection = styled.div`
+  background-color: #ffffff;
+  color: #24292f;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
 
-    const handlePostComment = (e) => {
-        e.preventDefault();
-        setIsPosting(true);
-        // Post the new comment to an API or database
-        fetch('/api/comments', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ comment: newComment }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                setComments([...comments, data]);
-                setNewComment('');
-                setIsPosting(false);
-            })
-            .catch(err => {
-                setError('Failed to post comment');
-                setIsPosting(false);
-            });
+  [data-theme="dark"] & {
+    background-color: #343a40;
+    color: #f0f6fc;
+    border-color: #30363d;
+  }
+`;
+
+const StyledWrapper = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  color: #24292f;
+
+  [data-theme="dark"] & {
+    background-color: #343a40;
+    color: #f0f6fc;
+  }
+`;
+
+const StyledForm = styled(Form)`
+  margin-top: 24px;
+`;
+
+const CommentSection = () => {
+  const { postId } = useParams();
+  const [comments, setComments] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [commentContent, setCommentContent] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+  const { isLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      setLoading(true);
+      try {
+        const [commentsData, commentCountData] = await Promise.all([
+          getPostComments(postId, currentPage, pageSize),
+          getPostCommentCount(postId)
+        ]);
+        setComments(commentsData);
+        setTotal(commentCountData.total_comments);
+      } catch (err) {
+        console.error('Error fetching comments:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    return (
-        <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-            <h2>Comments</h2>
-            <div style={{ marginBottom: '20px' }}>
-                {isLoading ? (
-                    <p>Loading comments...</p>
-                ) : error ? (
-                    <p style={{ color: 'red' }}>{error}</p>
-                ) : (
-                    comments.map((cmt, index) => (
-                        <div key={index} style={{ borderBottom: '1px solid #ccc', padding: '10px 0' }}>
-                            <p>{cmt}</p>
-                        </div>
-                    ))
-                )}
-            </div>
-            <div>
-                {isLogin ? (
-                    <form onSubmit={handlePostComment}>
-                        <textarea
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Input your comment"
-                            style={{ width: '100%', padding: '10px', marginBottom: '10px' }}
-                        />
-                        <button type="submit" disabled={isPosting} style={{ padding: '10px 20px' }}>
-                            {isPosting ? 'Posting...' : 'Post Comment'}
-                        </button>
-                    </form>
-                ) : (
-                    <p>Please log in to post a comment.</p>
-                )}
-            </div>
-        </div>
-    );
-}
+    fetchComments();
+  }, [postId, currentPage, pageSize]);
 
-export default Comment;
+  const handleSubmit = async () => {
+    if (!commentContent) {
+      message.warning('Please enter a comment');
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const { comment, total_comments } = await addPostComment(postId, { content: commentContent });
+      setComments([...comments, comment]);
+      setTotal(total_comments);
+      setCommentContent('');
+      message.success('Comment added successfully');
+    } catch (err) {
+      console.error('Error adding comment:', err);
+      message.error('Failed to add comment');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <StyledWrapper>
+      <StyledCommentSection>
+        <List
+          loading={loading}
+          dataSource={comments}
+          header={`${total} bình luận`}
+          itemLayout="horizontal"
+          renderItem={(comment) => (
+            <Comment
+              author={<Text strong>{comment.user.username}</Text>}
+              avatar={<Avatar>{comment.user.username[0]}</Avatar>}
+              content={comment.content}
+              datetime={
+                <Text type="secondary">
+                  {new Date(comment.created_at).toLocaleString()}
+                </Text>
+              }
+            />
+          )}
+        />
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={total}
+          onChange={handlePageChange}
+          style={{ marginTop: '16px', textAlign: 'center' }}
+        />
+        {isLoggedIn && (
+          <StyledForm>
+            <Form.Item>
+              <TextArea
+                rows={2}
+                value={commentContent}
+                onChange={(e) => setCommentContent(e.target.value)}
+                placeholder="Write a comment..."
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                htmlType="submit"
+                loading={submitting}
+                onClick={handleSubmit}
+                type="primary"
+              >
+                Gửi bình luận
+              </Button>
+            </Form.Item>
+          </StyledForm>
+        )}
+      </StyledCommentSection>
+    </StyledWrapper>
+  );
+};
+
+export default CommentSection;

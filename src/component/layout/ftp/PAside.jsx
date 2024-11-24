@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import StandardButton from "@/component/common/Button";
-import "../../css/HomePage.css"; import "../ftp/PAside.css";
+import '../../css/HomePage.css'
+import "../ftp/PAside.css";
 import { getCategories } from '@/pages/Posts/api';
 const PopularSide = () => {
   const [categories, setCategories] = useState([]);

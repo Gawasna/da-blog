@@ -2,21 +2,66 @@ import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
-import 'github-markdown-css'; // GitHub Markdown CSS for styling
-import 'highlight.js/styles/github.css'; // Optional: Code block styling
+import { useParams } from 'react-router-dom';
+import 'github-markdown-css';
+// import 'highlight.js/styles/github.css';
 import PopularSide from '@/component/layout/ftp/PAside';
 import Navbar from '@/component/layout/nav/Nav';
 import './PostDetail.css';
+import { Typography, Button, Space } from 'antd';
+import { HeartOutlined, HeartFilled } from '@ant-design/icons';
+import { checkLike, getPostById, getPostContent, getPostThumbnail } from '@/pages/Posts/api';
 
 const PostDetail = ({ markdownUrl }) => {
-  const [content, setContent] = useState('');
+  const [isLiked, setIsLiked] = useState(false);
+  const [postData, setPostData] = useState({
+    title: '',
+    created_at: '',
+    content: '',
+    thumbnail: ''
+  });
+
+  const { postId } = useParams();
 
   useEffect(() => {
-    fetch(markdownUrl)
-      .then((response) => response.text())
-      .then((text) => setContent(text))
-      .catch((error) => console.error('Error loading markdown:', error));
-  }, [markdownUrl]);
+    const fetchPostData = async () => {
+      try {
+        if (postId) {
+          // Fetch post details and content in parallel
+          const [details, content] = await Promise.all([
+            getPostById(postId),
+            getPostContent(postId)
+          ]);
+
+          setPostData({
+            title: details.title,
+            created_at: details.created_at,
+            content: content,
+            thumbnail: `http://localhost:3000/api/post/post/${postId}/image?width=800`
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching post:', err);
+      }
+    };
+
+    fetchPostData();
+  }, [postId]);
+
+  useEffect(() => {
+    const checkInitialLikeStatus = async () => {
+      try {
+        if (postId) {
+          const { isLiked } = await checkLike(postId);
+          setIsLiked(isLiked);
+        }
+      } catch (err) {
+        console.error('Error checking like status:', err);
+      }
+    };
+
+    checkInitialLikeStatus();
+  }, [postId]);
 
   return (
     <div className="mainL">
@@ -27,32 +72,57 @@ const PostDetail = ({ markdownUrl }) => {
         <div className="secBIn">
           <div className="blogM">
             <div className="contentctn">
-              <img src="https://media1.tenor.com/m/n2-u2ZdOyqwAAAAd/police-canthitg.gif" alt="" srcset="" />
-              <h3>
-                Title đấy
-              </h3>
-            <div className="markdown-body">
-              <ReactMarkdown
-                children={content}
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-                components={{
-                  h1: ({ children }) => <h1 style={{ fontSize: '2em', color: '#333' }}>{children}</h1>,
-                  h2: ({ children }) => <h2 style={{ fontSize: '1.5em', color: '#555' }}>{children}</h2>,
-                  code({ node, inline, className, children, ...props }) {
-                    return !inline ? (
-                      <pre className={className} {...props}>
-                        <code>{children}</code>
-                      </pre>
-                    ) : (
-                      <code {...props} style={{ backgroundColor: '#f5f5f5', padding: '0.2em 0.4em', borderRadius: '4px' }}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
+              <img
+                style={{ width: '90%', display: 'block', margin: '0 auto' }}
+                src={postData.thumbnail}
+                alt="Post thumbnail"
               />
-            </div>
+
+              <div className='pdi4' style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <Typography.Title className='pdi4' level={2} style={{ margin: 0 }}>
+                    {postData.title}
+                  </Typography.Title>
+                  <Typography.Text type="secondary">
+                    Posted on {new Date(postData.created_at).toLocaleDateString()}
+                  </Typography.Text>
+                </div>
+                <Button
+                  type="text"
+                  icon={isLiked ? <HeartFilled style={{ color: '#ff4d4f' }} /> : <HeartOutlined />}
+                  size="large"
+                  onClick={async () => {
+                    try {
+                      await likePost(postId);
+                      setIsLiked(prev => !prev);
+                    } catch (err) {
+                      console.error('Error toggling like:', err);
+                    }
+                  }}
+                />
+              </div>
+              <div className="markdown-body">
+                <ReactMarkdown
+                  children={postData.content}
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeHighlight]}
+                  components={{
+                    h1: ({ children }) => <h1 style={{ fontSize: '2em' }}>{children}</h1>,
+                    h2: ({ children }) => <h2 style={{ fontSize: '1.5em' }}>{children}</h2>,
+                    code({ node, inline, className, children, ...props }) {
+                      return !inline ? (
+                        <pre className={className} {...props}>
+                          <code>{children}</code>
+                        </pre>
+                      ) : (
+                        <code {...props} style={{ backgroundColor: '#00000', padding: '0.2em 0.4em', borderRadius: '4px' }}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                />
+              </div>
             </div>
             <PopularSide />
           </div>

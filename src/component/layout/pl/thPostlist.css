@@ -1,0 +1,61 @@
+/* List container */
+.ant-list {
+    background-color: #ffffff;
+    color: #24292f;
+}
+
+[data-theme="dark"] .ant-list {
+    background-color: #343a40;
+    color: #f0f6fc;
+}
+
+/* List items */
+.ant-list-item {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+}
+
+[data-theme="dark"] .ant-list-item {
+    background-color: #343a40;
+    border-color: #30363d;
+}
+
+/* Title and text */
+.ant-typography {
+    color: #24292f;
+}
+
+[data-theme="dark"] .ant-typography {
+    color: #f0f6fc;
+}
+
+/* Secondary text */
+.ant-typography.ant-typography-secondary {
+    color: #57606a;
+}
+
+[data-theme="dark"] .ant-typography.ant-typography-secondary {
+    color: #f0f6fc;
+}
+
+/* Category text */
+.ant-space-item .ant-typography-secondary {
+    color: #57606a;
+}
+
+[data-theme="dark"] .ant-space-item .ant-typography-secondary {
+    color: #f0f6fc;
+}
+
+/* Load more button */
+.ant-btn {
+    background-color: #ffffff;
+    border-color: #d0d7de;
+    color: #24292f;
+}
+
+[data-theme="dark"] .ant-btn {
+    background-color: #21262d;
+    border-color: #30363d;
+    color: #f0f6fc;
+}

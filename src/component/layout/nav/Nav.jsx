@@ -1,46 +1,69 @@
 import React, { useState } from 'react';
-import './Navbar.css'; // CSS file for styling
+import { Menu } from 'antd';
+import {
+  FileOutlined,
+  UserOutlined,
+  PhoneOutlined,
+  FolderOutlined,
+} from '@ant-design/icons';
 
-const Navbar = () => {
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+const Nav = () => {
+  const [collapsed, setCollapsed] = useState(false);
 
-  const toggleCategory = () => {
-    setIsCategoryOpen(!isCategoryOpen);
-  };
+  const items = [
+    {
+      key: 'whatsnew',
+      icon: <FileOutlined />,
+      label: "What's new?",
+      onClick: () => window.location.href = '/whatsnew',
+    },
+    {
+      key: 'categories',
+      icon: <FolderOutlined />,
+      label: 'Danh mục (Category)',
+      children: [
+        {
+          key: 'sub1',
+          label: 'Danh mục con 1',
+        },
+        {
+          key: 'sub2',
+          label: 'Danh mục con 2',
+        },
+        {
+          key: 'sub3',
+          label: 'Danh mục con 3',
+        },
+      ],
+    },
+    {
+      key: 'contact',
+      icon: <PhoneOutlined />,
+      label: 'Liên hệ',
+      onClick: () => window.location.href = 'mailto:hunglepy05@gmail.com',
+    },
+    {
+      key: 'about',
+      icon: <UserOutlined />,
+      label: 'Về tôi',
+      onClick: () => window.location.href = 'https://github.com/Gawasna',
+    },
+  ];
 
   return (
-    <div className="navbar">
-      <div className="navbar-item">
-        <i className="icon">📰</i>
-        <span>What's new?</span>
-      </div>
-
-      <div className="navbar-item category">
-        <div className="category-title" onClick={toggleCategory}>
-          <i className="icon">📂</i>
-          <span>Danh mục (Category)</span>
-          <i className="toggle-icon">{isCategoryOpen ? '▲' : '▼'}</i>
-        </div>
-        {isCategoryOpen && (
-          <div className="sub-categories">
-            <div className="sub-category-item">Danh mục con 1</div>
-            <div className="sub-category-item">Danh mục con 2</div>
-            <div className="sub-category-item">Danh mục con 3</div>
-          </div>
-        )}
-      </div>
-
-      <div className="navbar-item">
-        <i className="icon">☎️</i>
-        <span>Liên hệ</span>
-      </div>
-
-      <div className="navbar-item">
-        <i className="icon">👤</i>
-        <span>Về tôi</span>
-      </div>
-    </div>
+    <Menu
+      mode="inline"
+      defaultSelectedKeys={['whatsnew']}
+      defaultOpenKeys={['categories']}
+      style={{
+        width: collapsed ? 80 : 250,
+        height: '100vh',
+        borderRight: '1px solid #f0f0f0',
+      }}
+      inlineCollapsed={collapsed}
+      items={items}
+    />
   );
 };
 
-export default Navbar;
+export default Nav;

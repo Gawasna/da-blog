@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./login.css";
-import { login } from "./api.js";
-import { Link, useNavigate  } from "react-router-dom";
+import { Form, Input, Button, Typography, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { IsEmail, IsNotEmpty } from "class-validator";
+import "./login.css";
 
 class LoginData {
   @IsNotEmpty({ message: "Please enter your email" })
@@ -13,49 +13,99 @@ class LoginData {
   password = "";
 }
 
-const Register = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const { Title, Text } = Typography;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle register logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+const Register = () => {
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (values) => {
+    setIsLoading(true);
+
+    try {
+      // Simulating a successful registration (replace with API logic)
+      console.log("Form Values:", values);
+
+      message.success("Registration successful! Redirecting to Login...");
+      navigate("/login");
+    } catch (error) {
+      // Simulate an error scenario
+      message.error(error.message || "Registration failed! Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleValidationFailed = (errorInfo) => {
+    // Display popup for form validation errors
+    message.warning("Please fix the validation errors before submitting!");
   };
 
   return (
     <div className="lfbg">
       <div className="frglw">
-      <div className="login-container">
-        <h2 className="tlt login">Register</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email:</label>
-            <input
-              placeholder="Enter your Email"
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
-            <input
-              placeholder="Enter your Password"
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          <button className="button login is-white" type="submit">Login</button>
-        </form>
-        <label>Already have an account?</label><Link to="/Login"> Login</Link>
-      </div>
+        <div className="login-container">
+          <Title level={2} className="tlt login">
+            Register
+          </Title>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
+            onFinishFailed={handleValidationFailed}
+            autoComplete="off"
+            style={{ maxWidth: "400px", margin: "0 auto" }}
+          >
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your email!",
+                },
+                {
+                  type: "email",
+                  message: "Invalid email format!",
+                },
+              ]}
+            >
+              <Input placeholder="Enter your Email" />
+            </Form.Item>
+
+            <Form.Item
+              label="Password"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your password!",
+                },
+                {
+                  min: 6,
+                  message: "Password must be at least 6 characters!",
+                },
+              ]}
+            >
+              <Input.Password placeholder="Enter your Password" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading}
+                block
+              >
+                Register
+              </Button>
+            </Form.Item>
+          </Form>
+          <Text>
+            Already have an account? <Link to="/login">Login</Link>
+          </Text>
+        </div>
       </div>
     </div>
   );

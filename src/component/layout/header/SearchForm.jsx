@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { liveSearching } from "../../../pages/Posts/api";
 import debounce from "./debounce";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const SearchForm = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
 
   const fetchSearchResults = async (searchQuery) => {
     try {
@@ -40,6 +42,11 @@ const SearchForm = () => {
     setShowResults(false);
   };
 
+  const handleResultClick = (postId) => {
+    navigate(`/post/${postId}`);
+    clearSearch();
+  };
+
   return (
     <form className="search-form">
       <input
@@ -63,7 +70,7 @@ const SearchForm = () => {
         <span id="search-results">
           <ul id="results-list">
             {results.map(result => (
-              <li key={result.id}>
+              <li key={result.id} onClick={() => handleResultClick(result.id)}>
                 <img src={`http://localhost:3000/api/post/post/${result.id}/image?width=75`} alt={result.title} className="thumbnail" />
                 <span>{result.title}</span>
               </li>

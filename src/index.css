@@ -143,9 +143,9 @@ body[data-theme="dark"] {
     left: 0;
     height: 700px;
     width: var(--headlW);
-    background-color: #da6600;
+    /* background-color: #da6600; */
     transition: var(--transL1);
-    border: 3px #000000 dotted;
+    /* border: 3px #000000 dotted; */
     /* z-index: 10; */
     /* position: fixed; */
     /* top: 0;*/

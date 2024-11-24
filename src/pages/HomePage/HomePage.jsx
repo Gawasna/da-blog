@@ -1,7 +1,7 @@
 import Banner from "../../component/layout/banner/banner";
 import { useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
-import "./HomePage.css";
+import '../../component/css/HomePage.css'
 import StandardButton from "@/component/common/Button";
 import NavBar from "@/component/layout/nav/Nav";
 import { useState, useEffect } from "react";
