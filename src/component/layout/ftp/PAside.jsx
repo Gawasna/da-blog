@@ -1,118 +1,121 @@
 import React, { useEffect, useState } from 'react';
 import StandardButton from "@/component/common/Button";
-import '../../css/HomePage.css'
+import '../../css/HomePage.css';
 import "../ftp/PAside.css";
-import { getCategories } from '@/pages/Posts/api';
+import { getPopularPosts, getCategories } from '@/pages/Posts/api';
+import { useNavigate } from 'react-router-dom';
+
 const PopularSide = () => {
+  const [posts, setPosts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [skip, setSkip] = useState(0);
   const take = 3;
-  const [loading, setLoading] = useState(false);
+  const [loadingPosts, setLoadingPosts] = useState(false);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+  const navigate = useNavigate();
 
+  // Fetch popular posts
+  const fetchPopularPosts = async () => {
+    try {
+      setLoadingPosts(true);
+      const data = await getPopularPosts();
+      setPosts(data);
+    } catch (error) {
+      console.error('Error fetching popular posts:', error);
+    } finally {
+      setLoadingPosts(false);
+    }
+  };
+
+  // Fetch categories
   const fetchCategories = async () => {
     try {
-      setLoading(true);
+      setLoadingCategories(true);
       const data = await getCategories(skip, take);
       setCategories(prev => [...prev, ...data]);
     } catch (error) {
       console.error('Error fetching categories:', error);
     } finally {
-      setLoading(false);
+      setLoadingCategories(false);
     }
   };
 
-  const handleLoadMore = (e) => {
+  const handleLoadMoreCategories = (e) => {
     e.preventDefault();
     setSkip(prev => prev + take);
   };
 
   useEffect(() => {
+    fetchPopularPosts();
+  }, []);
+
+  useEffect(() => {
     fetchCategories();
   }, [skip]);
+
+  const handleNavigateToPost = (postId) => {
+    navigate(`/post/${postId}`);
+  };
 
   return (
     <aside className="blogItm sidebar">
       <div className="sideIn">
         <div className="section" id="side-widget">
+          {/* Phần bài viết phổ biến */}
           <div className="widget popularPost" id="ppost">
-            <h3 className="ptts">
-              Bài viết phổ biến
-            </h3>
+            <h3 className="ptts">Bài viết phổ biến</h3>
             <div className="itemPp" role="feed">
-              <article className="itm mostP">
-                <div className="Pthmb">
-                  <img src="https://images-ng.pixai.art/images/orig/fbae40aa-dc75-481e-b643-dfb7f95896f9" alt="" id="thumbnailtest" />
-                </div>
-                <div className="infopp widget">
-                  <div className="pptime">T5 05/11/24</div>
-                  <div className="pCtg">Cong nghe</div>
-                </div>
-                <div className="pcCtn">
-                  <div className="pTitle">Tiêu đề</div>
-                </div>
-                <div className="pSmp">Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam cumque, asperiores corporis labore deleniti, esse nisi culpa</div>
-              </article>
+              {posts.length > 0 && (
+                <>
+                  {/* Bài viết đầu tiên có thumbnail */}
+                  <article 
+                  className="itm mostP" 
+                  onClick={() => handleNavigateToPost(posts[0].id)} 
+                  style={{ cursor: 'pointer' }}
+                  >
+                    <div className="Pthmb">
+                      <img 
+                        src={`http://localhost:3000/api/post/post/${posts[0].id}/image?width=300`} 
+                        alt={posts[0].title} 
+                        id="thumbnailtest" 
+                      />
+                    </div>
+                    <div className="infopp widget">
+                      <div className="pptime">{new Date(posts[0].created_at).toLocaleDateString()}</div>
+                      <div className="pCtg">{posts[0].category.name}</div>
+                    </div>
+                    <div className="pcCtn">
+                      <div className="pTitle">{posts[0].title}</div>
+                    </div>
+                    <div className="pSmp">{posts[0].description}</div>
+                  </article>
 
-              <article className="itm">
-                <div className="infopp">
-                  <div className="pptime">thời gian</div>
-                  <div className="pCtg">category</div>
-                </div>
-                <div className="pcCtn">
-                  <div className="pTitle">Tiêu đề</div>
-                </div>
-                <div className="pSmp">Nội dung</div>
-              </article>
-
-              <article className="itm">
-                <div className="infopp">
-                  <div className="pptime">thời gian</div>
-                  <div className="pCtg">category</div>
-                </div>
-                <div className="pcCtn">
-                  <div className="pTitle">Tiêu đề</div>
-                </div>
-                <div className="pSmp">Nội dung</div>
-              </article>
-
-              <article className="itm">
-                <div className="infopp">
-                  <div className="pptime">thời gian</div>
-                  <div className="pCtg">category</div>
-                </div>
-                <div className="pcCtn">
-                  <div className="pTitle">Tiêu đề</div>
-                </div>
-                <div className="pSmp">Nội dung</div>
-              </article>
-
-              <article className="itm">
-                <div className="infopp">
-                  <div className="pptime">thời gian</div>
-                  <div className="pCtg">category</div>
-                </div>
-                <div className="pcCtn">
-                  <div className="pTitle">Tiêu đề</div>
-                </div>
-                <div className="pSmp">Nội dung</div>
-              </article>
-
-              <article className="itm">
-                <div className="infopp">
-                  <div className="pptime">thời gian</div>
-                  <div className="pCtg">category</div>
-                </div>
-                <div className="pcCtn">
-                  <div className="pTitle">Tiêu đề</div>
-                </div>
-                <div className="pSmp">Nội dung</div>
-              </article>
+                  {/* Các bài viết tiếp theo không cần thumbnail */}
+                  {posts.slice(1).map(post => (
+                    <article  
+                    key={post.id} 
+                    className="itm" 
+                    onClick={() => handleNavigateToPost(post.id)}
+                    style={{ cursor: 'pointer' }}
+                    >
+                      <div className="infopp">
+                        <div className="pptime">{new Date(post.created_at).toLocaleDateString()}</div>
+                        <div className="pCtg">{post.category.name}</div>
+                      </div>
+                      <div className="pcCtn">
+                        <div className="pTitle">{post.title}</div>
+                      </div>
+                      <div className="pSmp">{post.description}</div>
+                    </article>
+                  ))}
+                </>
+              )}
             </div>
           </div>
+
+          {/* Phần danh mục (categories) */}
           <div className="widget label" id="labelPP">
-            <h3 className="btts">
-              Label
-            </h3>
+            <h3 className="btts">Label</h3>
             <div style={{ padding: '10px' }}>
               <div className="clistlabels">
                 {categories.map((category) => (
@@ -123,8 +126,8 @@ const PopularSide = () => {
               </div>
             </div>
             <div className="loadMorelb">
-              <StandardButton onClick={handleLoadMore} disabled={loading}>
-                {loading ? 'Loading...' : 'Load More'}
+              <StandardButton onClick={handleLoadMoreCategories} disabled={loadingCategories}>
+                {loadingCategories ? 'Loading...' : 'Load More'}
               </StandardButton>
             </div>
           </div>

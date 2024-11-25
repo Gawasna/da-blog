@@ -1,40 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu } from 'antd';
-import {
-  FileOutlined,
-  UserOutlined,
-  PhoneOutlined,
-  FolderOutlined,
-} from '@ant-design/icons';
+import { FileOutlined, FolderOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
+import { getNCategory } from '@/pages/Posts/api'; // Adjust the import path as needed
 
 const Nav = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const wn = "https://github.com/Gawasna/da-blog/blob/main/public/What's%20News.md";
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await getNCategory();
+      setCategories(data);
+    };
+    fetchCategories();
+  }, []);
 
   const items = [
     {
       key: 'whatsnew',
       icon: <FileOutlined />,
       label: "What's new?",
-      onClick: () => window.location.href = '/whatsnew',
+      onClick: () => window.location.href = wn,
     },
     {
       key: 'categories',
       icon: <FolderOutlined />,
-      label: 'Danh mục (Category)',
-      children: [
-        {
-          key: 'sub1',
-          label: 'Danh mục con 1',
-        },
-        {
-          key: 'sub2',
-          label: 'Danh mục con 2',
-        },
-        {
-          key: 'sub3',
-          label: 'Danh mục con 3',
-        },
-      ],
+      label: 'Danh mục',
+      children: categories.map(category => ({
+        key: `category-${category.id}`,
+        label: category.name,
+      })),
     },
     {
       key: 'contact',

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const APP_POST_API = '/api/post';
+const BASE_API = '/api';
 
 export const getBanners = async (credentials) => {
     const response = await axios.get(`${APP_POST_API}/banner`, credentials);
@@ -125,6 +126,24 @@ export const getPostById = async (postId) => {
     return response.data;
 }
 
+/**
+ * @typedef {Object} Category
+ * @property {string} name - The name of the category
+ */
+
+/**
+ * @typedef {Object} Post
+ * @property {number} id - The ID of the post
+ * @property {string} title - The title of the post
+ * @property {string} image_path - The path to the image associated with the post
+ * @property {string} created_at - The creation date of the post in ISO format
+ * @property {string} description - The description of the post
+ * @property {Category} category - The category of the post
+ */
+
+/**
+ * @typedef {Post[]} Posts
+ */
 export const getPopularPosts = async () => {
     const response = await axios.get(`${APP_POST_API}/popular`);
     return response.data;
@@ -144,4 +163,9 @@ export const checkLike = async (postId) => {
         }
     });
     return response.data;
+}
+
+export const getNCategory = async () => {
+    const res = await axios.get(`${BASE_API}/categories`);
+    return res.data;
 }

@@ -12,3 +12,7 @@
 .loadMorelb .homepage{
     display: flex;
 }
+
+.pTitle {
+    font-weight: bold;
+}

@@ -14,6 +14,7 @@ import Dashboard from "@/pages/Admin/Dashboard";
 import PostList from "@/component/layout/pl/PostList";
 import CommentSection from "@/component/layout/cmt/Comment";
 import ReactMarkdown from 'react-markdown';
+import CreatePost from "@/pages/Admin/CreatePost";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
       {
         path: "admin/dashboard",
         element: <Dashboard/>,
+      },
+      {
+        path: "admin/create-post",
+        element: <CreatePost/>
       },
     ],
   },

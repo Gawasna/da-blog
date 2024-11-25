@@ -29,23 +29,23 @@ function MainPosts({ showBanner = true }) {
   const [loading, setLoading] = useState(false);
 
   // Keep existing useEffect and function implementations
-  // Check for new posts
   const checkForNewPosts = async () => {
     try {
       const newestPosts = await getLatestPosts(1, 1);
       const cachedPosts = localStorage.getItem('cachedPosts');
-
+  
       if (cachedPosts) {
         const parsedCachedPosts = JSON.parse(cachedPosts);
         if (newestPosts[0]?.id !== parsedCachedPosts[0]?.id) {
           clearCache();
+          setPage(1); // Đặt lại trang về 1
+          fetchPosts(); // Tải lại danh sách bài viết từ đầu
         }
       }
     } catch (error) {
       console.error('Error checking for new posts:', error);
     }
   };
-
   // Fetch posts
   const fetchPosts = async () => {
     if (loading) return;

@@ -25,6 +25,7 @@ import {
 
 import { getDashboard } from './api';
 import './dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -66,6 +67,12 @@ const Dashboard = () => {
 
   const handleTableChange = (pagination) => {
     setPagination(pagination);
+  };
+
+  const navigate = useNavigate();
+
+  const handleCreatePost = () => {
+    navigate('/admin/create-post');
   };
 
   const columns = [
@@ -119,6 +126,9 @@ const Dashboard = () => {
         <Space>
           <Avatar icon={<UserOutlined />} />
           <span style={{ color: 'white' }}>Admin</span>
+          <Button type="primary" onClick={handleCreatePost}>
+            Create Post
+          </Button>
         </Space>
       </Header>
 

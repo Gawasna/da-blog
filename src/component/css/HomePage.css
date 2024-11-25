@@ -316,6 +316,7 @@ section:not(.no-items), .blogCont .widget:not(:first-child) {
     color: inherit;
     display: -webkit-box;
     -webkit-line-clamp: 3;
+    font-size: 14px;
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
