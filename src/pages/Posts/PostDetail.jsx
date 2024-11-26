@@ -10,7 +10,7 @@ import Navbar from '@/component/layout/nav/Nav';
 import './PostDetail.css';
 import { Typography, Button, Space } from 'antd';
 import { HeartOutlined, HeartFilled } from '@ant-design/icons';
-import { checkLike, getPostById, getPostContent, getPostThumbnail } from '@/pages/Posts/api';
+import { checkLike, getPostById, getPostContent, getPostThumbnail, likePost } from '@/pages/Posts/api';
 
 const PostDetail = ({ markdownUrl }) => {
   const [isLiked, setIsLiked] = useState(false);

@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Typography, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { signup } from "./api"; // Import hàm signup từ api.js
 import "./login.css";
-
-class LoginData {
-  @IsNotEmpty({ message: "Please enter your email" })
-  @IsEmail({}, { message: "Invalid email format" })
-  email = "";
-
-  @IsNotEmpty({ message: "Please enter your password" })
-  password = "";
-}
 
 const { Title, Text } = Typography;
 
@@ -24,21 +15,20 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      // Simulating a successful registration (replace with API logic)
-      console.log("Form Values:", values);
-
+      // Gửi dữ liệu đăng ký đến API
+      await signup(values);
       message.success("Registration successful! Redirecting to Login...");
       navigate("/login");
     } catch (error) {
-      // Simulate an error scenario
-      message.error(error.message || "Registration failed! Please try again.");
+      // Xử lý lỗi từ API
+      message.error(error.response?.data?.message || "Registration failed! Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleValidationFailed = (errorInfo) => {
-    // Display popup for form validation errors
+    // Hiển thị thông báo lỗi khi form không hợp lệ
     message.warning("Please fix the validation errors before submitting!");
   };
 
@@ -57,6 +47,23 @@ const Register = () => {
             autoComplete="off"
             style={{ maxWidth: "400px", margin: "0 auto" }}
           >
+            <Form.Item
+              label="Username"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter your username!",
+                },
+                {
+                  min: 4,
+                  message: "Username must be at least 4 characters!",
+                },
+              ]}
+            >
+              <Input placeholder="Enter your Username" />
+            </Form.Item>
+
             <Form.Item
               label="Email"
               name="email"

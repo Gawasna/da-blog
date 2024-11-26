@@ -11,7 +11,7 @@ const CreatePost = () => {
   const [thumbnailType, setThumbnailType] = useState('file');
   const [previewImage, setPreviewImage] = useState(null);
 
-  const onFinish = async (values) => {
+const onFinish = async (values) => {
     const formData = new FormData();
     formData.append('title', values.title);
     formData.append('author_id', values.author_id);
@@ -20,28 +20,33 @@ const CreatePost = () => {
 
     // Handle content
     if (contentType === 'file' && values.content?.file) {
-      formData.append('content', values.content.file);
+        formData.append('content', values.content.file);
     } else if (contentType === 'url') {
-      formData.append('content_path', values.content_url);
+        formData.append('content_path', values.content_url);
     }
 
     // Handle thumbnail
     if (thumbnailType === 'file' && values.thumbnail?.file) {
-      formData.append('thumbnail', values.thumbnail.file);
+        formData.append('thumbnail', values.thumbnail.file);
     } else if (thumbnailType === 'url') {
-      formData.append('image_path', values.thumbnail_url);
+        formData.append('image_path', values.thumbnail_url);
     }
 
+    const token = localStorage.getItem('access_token');
+
     try {
-      await axios.post('http://localhost:3000/admin/create-post', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      message.success('Post created successfully');
-      navigate('/admin/dashboard');
+        await axios.post('http://localhost:3000/admin/create-post', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${token}`
+            },
+        });
+        message.success('Post created successfully');
+        navigate('/admin/dashboard');
     } catch (error) {
-      message.error('Failed to create post');
+        message.error('Failed to create post');
     }
-  };
+};
 
   const handleThumbnailChange = (info) => {
     if (info.file && info.file.originFileObj) {
