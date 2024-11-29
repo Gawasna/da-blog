@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Card, Row, Col, Button, Typography, Tag, Image } from 'antd';
 import StandardButton from "@/component/common/Button";
 import '../../css/HomePage.css';
 import "../ftp/PAside.css";
@@ -13,7 +14,7 @@ const PopularSide = () => {
   const [loadingPosts, setLoadingPosts] = useState(false);
   const [loadingCategories, setLoadingCategories] = useState(false);
   const navigate = useNavigate();
-
+  const [visible, setVisible] = useState(true);
   // Fetch popular posts
   const fetchPopularPosts = async () => {
     try {
@@ -26,7 +27,6 @@ const PopularSide = () => {
       setLoadingPosts(false);
     }
   };
-
   // Fetch categories
   const fetchCategories = async () => {
     try {
@@ -43,6 +43,7 @@ const PopularSide = () => {
   const handleLoadMoreCategories = (e) => {
     e.preventDefault();
     setSkip(prev => prev + take);
+    setVisible(false);
   };
 
   useEffect(() => {
@@ -126,9 +127,9 @@ const PopularSide = () => {
               </div>
             </div>
             <div className="loadMorelb">
-              <StandardButton onClick={handleLoadMoreCategories} disabled={loadingCategories}>
-                {loadingCategories ? 'Loading...' : 'Load More'}
-              </StandardButton>
+              {visible && <Button onClick={handleLoadMoreCategories} disabled={loadingCategories}>
+                {loadingCategories ? 'Loading...' : 'Tải thêm'}
+              </Button>}
             </div>
           </div>
         </div>
