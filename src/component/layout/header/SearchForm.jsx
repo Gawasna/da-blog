@@ -5,6 +5,7 @@ import { liveSearching } from "../../../pages/Posts/api";
 import debounce from "./debounce";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./SearchForm.css";
 
 const SearchForm = () => {
   const [query, setQuery] = useState("");

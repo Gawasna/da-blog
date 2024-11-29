@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Table, 
-  Card, 
-  Row, 
-  Col, 
-  Badge, 
-  Statistic, 
-  Avatar, 
+import {
+  Table,
+  Card,
+  Row,
+  Col,
+  Badge,
+  Statistic,
+  Avatar,
   Space,
   Typography,
   Input,
@@ -59,8 +59,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
-
-    // Optional: Setup real-time updates
     const interval = setInterval(fetchDashboardData, 30000);
     return () => clearInterval(interval);
   }, [pagination.current, pagination.pageSize]);
@@ -74,6 +72,14 @@ const Dashboard = () => {
   const handleCreatePost = () => {
     navigate('/admin/create-post');
   };
+
+  const handleNavigateToPostManagement = () => {
+    navigate('/admin/post-management');
+  };
+
+  const handleNavigateToUserManagement = () => {
+    navigate('/admin/user-management');
+  }
 
   const columns = [
     {
@@ -93,8 +99,8 @@ const Dashboard = () => {
       dataIndex: 'status',
       key: 'status',
       render: (status) => (
-        <Badge 
-          status={status === 'public' ? 'success' : 'default'} 
+        <Badge
+          status={status === 'public' ? 'success' : 'default'}
           text={status}
         />
       )
@@ -129,6 +135,18 @@ const Dashboard = () => {
           <Button type="primary" onClick={handleCreatePost}>
             Create Post
           </Button>
+          <Button
+            type="primary"
+            onClick={handleNavigateToPostManagement}
+          >
+            Post Management
+          </Button>
+          <Button
+            type="primary"
+            onClick={handleNavigateToUserManagement}
+          >
+            User Management
+          </Button>
         </Space>
       </Header>
 
@@ -136,7 +154,7 @@ const Dashboard = () => {
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} lg={6}>
             <Card>
-              <Statistic 
+              <Statistic
                 title="Total Posts"
                 value={posts.length}
                 prefix={<FileTextOutlined />}
@@ -174,7 +192,7 @@ const Dashboard = () => {
           </Col>
         </Row>
 
-        <Card 
+        <Card
           className="posts-table"
           title="Posts Management"
           extra={
@@ -185,8 +203,8 @@ const Dashboard = () => {
                 onSearch={setSearchText}
                 style={{ width: 200 }}
               />
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 icon={<ReloadOutlined />}
                 onClick={fetchDashboardData}
                 loading={loading}

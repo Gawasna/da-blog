@@ -15,6 +15,8 @@ import PostList from "@/component/layout/pl/PostList";
 import CommentSection from "@/component/layout/cmt/Comment";
 import ReactMarkdown from 'react-markdown';
 import CreatePost from "@/pages/Admin/CreatePost";
+import PostManagement from "@/pages/Admin/postmanagement";
+import UserManagement from "@/pages/Admin/usermanagement";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +75,14 @@ const router = createBrowserRouter([
         path: "admin/create-post",
         element: <CreatePost/>
       },
+      {
+        path: "admin/post-management",
+        element: <PostManagement/>
+      },
+      {
+        path: "admin/user-management",
+        element: <UserManagement/>
+      }
     ],
   },
 ]);

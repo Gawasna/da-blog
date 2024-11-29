@@ -46,6 +46,35 @@ function MainPosts({ showBanner = true }) {
       console.error('Error checking for new posts:', error);
     }
   };
+
+  useEffect(() => {
+    loadPosts(1);
+  }, []);
+
+  const loadPosts = async (page) => {
+    const response = await fetch(`/api/posts?page=${page}`);
+    const data = await response.json();
+    if (hasPostsChanged(data.posts)) {
+      setCachedPosts([]);
+      setCachedPage(1);
+      setPosts(data.posts);
+    } else {
+      setPosts(data.posts);
+    }
+  };
+
+  const hasPostsChanged = (newPosts) => {
+    if (cachedPosts.length !== newPosts.length) {
+      return true;
+    }
+    for (let i = 0; i < cachedPosts.length; i++) {
+      if (cachedPosts[i].id !== newPosts[i].id || cachedPosts[i].updatedAt !== newPosts[i].updatedAt) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   // Fetch posts
   const fetchPosts = async () => {
     if (loading) return;

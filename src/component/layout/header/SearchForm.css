@@ -1,0 +1,106 @@
+/* Search form */
+.search-form {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 375px;
+}
+
+#searchfield {
+    width: 100%;
+    padding: 8px 35px 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f6f8fa;
+    color: #24292f;
+}
+
+[data-theme="dark"] #searchfield {
+    background-color: #21262d;
+    border-color: #30363d;
+    color: #f0f6fc;
+}
+
+.search-icon,
+.clear-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clear-icon {
+    display: none;
+}
+
+.search-form input:not(:placeholder-shown) ~ .search-icon {
+    display: none; /* Hide search icon when there is input */
+}
+
+.search-form input:not(:placeholder-shown) ~ .clear-icon {
+    display: flex; /* Show clear icon when there is input */
+}
+
+#search-results {
+    position: absolute;
+    top: 100%; /* Position below the input field */
+    left: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Rounded corners for the results dropdown */
+    max-height: 200px; /* Maximum height for results list */
+    overflow-y: auto; /* Scrollable if content overflows */
+    z-index: 10; /* Ensure results dropdown is above other content */
+}
+
+[data-theme="dark"] #search-results {
+    background-color: #21262d;
+    border-color: #30363d;
+}
+
+#results-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#results-list li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee; /* Divider between results */
+}
+
+[data-theme="dark"] #results-list li {
+    border-bottom: 1px solid #30363d;
+}
+
+#results-list li:last-child {
+    border-bottom: none; /* Remove border from last item */
+}
+
+#results-list img.thumbnail {
+    width: 70px; /* Thumbnail width */
+    aspect-ratio: 16/9;
+    object-fit: cover; /* Ensure image covers the area */
+    margin-right: 10px; /* Space between image and text */
+}
+
+#results-list li:hover {
+    background-color: #f0f0f0; /* Highlight on hover */
+}
+
+[data-theme="dark"] #results-list li:hover {
+    background-color: #21262d; /* Highlight on hover in dark mode */
+}

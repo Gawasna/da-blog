@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { login } from "./api.js";
 import { Link, useNavigate } from "react-router-dom";
 import { validate, IsNotEmpty, IsEmail } from "class-validator";
@@ -19,6 +19,32 @@ const Login = () => {
   const navigate = useNavigate();
   const [logindata, setLogindata] = useState(new LoginData());
   const [isLoading, setIsLoading] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+
+  // Cập nhật bộ đếm ngược mỗi giây
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prevCountdown) => {
+          if (prevCountdown <= 1) {
+            clearInterval(timer); // Dừng bộ đếm khi hết thời gian
+            return 0;
+          }
+          return prevCountdown - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [countdown]);
+
+  // Hiển thị thông báo khi bộ đếm ngược thay đổi
+  // useEffect(() => {
+  //   if (countdown > 0) {
+  //     antMessage.destroy();  // Xóa thông báo cũ để tránh trùng lặp
+  //     antMessage.warning(`Please wait ${countdown} seconds before trying again.`);
+  //   }
+  // }, [countdown]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,8 +52,11 @@ const Login = () => {
   };
 
   const handleLogin = async (values) => {
+    if (countdown > 0) {
+      antMessage.error(`Please wait ${countdown} seconds before trying again.`);
+      return;
+    }
     setIsLoading(true);
-
     const errors = await validate(logindata);
     if (errors.length > 0) {
       const errorMessages = errors.map((error) =>
@@ -37,19 +66,22 @@ const Login = () => {
       setIsLoading(false);
       return;
     }
-
     try {
       const response = await login(logindata);
       antMessage.success("Login successful! Redirecting...");
       localStorage.setItem("access_token", response.access_Token);
       localStorage.setItem("refresh_token", response.refresh_Token);
+      localStorage.setItem("user_id", response.user_id);
       setIsLoggedIn(true);
       setTimeout(() => {
         navigate("/");
       }, 1500);
     } catch (error) {
-      const HTTPerror = error.response.statusText + " " + error.response.status;
-      if (error.response) {
+      if (error.response && error.response.status === 429) {
+        setCountdown(60);  // Đặt lại bộ đếm khi bị giới hạn
+        antMessage.error("Too many login attempts. Please wait 60 seconds before trying again.");
+      } else if (error.response) {
+        const HTTPerror = error.response.statusText + " " + error.response.status;
         const errorMessage = error.response.data.message;
         antMessage.error(HTTPerror || errorMessage);
         console.log(HTTPerror);
@@ -68,16 +100,20 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "90vh",
-        background: "#f0f2f5",
+        backgroundImage: `url("https://images8.alphacoders.com/138/1382594.jpg")`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <div
         style={{
           width: 400,
           padding: 24,
-          background: "#fff",
+          background: "rgba(255, 255, 255, 0.1)",
           borderRadius: 8,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+          boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+          backdropFilter: "blur(10px)",
         }}
       >
         <h2 style={{ textAlign: "center", marginBottom: 24 }}>Login</h2>

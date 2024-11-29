@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { List, Card, Space, Typography, Button } from 'antd';
 import { getLatestPosts } from '../../../pages/Posts/api.js';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import "./thPostlist.css";
 
 const { Title, Text, Paragraph } = Typography;
@@ -20,6 +21,7 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledListItem = styled(List.Item)`
+  cursor: pointer;
   .ant-list-item-meta-avatar {
     width: 150px;
     margin-right: 16px;
@@ -39,6 +41,7 @@ function PostList() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const limit = 6;
+  const navigate = useNavigate();
 
   const fetchPosts = async () => {
     if (loading) return;
@@ -77,6 +80,11 @@ function PostList() {
     </div>
   );
 
+  const handlePostClick = (id) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(`/post/${id}`);
+  };
+
   return (
     <StyledWrapper>
       <List
@@ -93,7 +101,7 @@ function PostList() {
         loadMore={loadMore}
         dataSource={posts}
         renderItem={(post) => (
-          <StyledListItem>
+          <StyledListItem onClick={() => handlePostClick(post.id)}>
             <List.Item.Meta
               avatar={<img src={post.image_path} alt={post.title} />}
               title={
