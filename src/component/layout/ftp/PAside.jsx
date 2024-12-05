@@ -5,6 +5,7 @@ import '../../css/HomePage.css';
 import "../ftp/PAside.css";
 import { getPopularPosts, getCategories } from '@/pages/Posts/api';
 import { useNavigate } from 'react-router-dom';
+import Link from 'antd/es/typography/Link';
 
 const PopularSide = () => {
   const [posts, setPosts] = useState([]);
@@ -58,6 +59,11 @@ const PopularSide = () => {
     navigate(`/post/${postId}`);
   };
 
+  const handleNavigateToCategory = (categoryId) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' }); // Cuộn lên đầu trang
+    navigate(`/category/${categoryId}`);
+  };
+
   return (
     <aside className="blogItm sidebar">
       <div className="sideIn">
@@ -69,16 +75,16 @@ const PopularSide = () => {
               {posts.length > 0 && (
                 <>
                   {/* Bài viết đầu tiên có thumbnail */}
-                  <article 
-                  className="itm mostP" 
-                  onClick={() => handleNavigateToPost(posts[0].id)} 
-                  style={{ cursor: 'pointer' }}
+                  <article
+                    className="itm mostP"
+                    onClick={() => handleNavigateToPost(posts[0].id)}
+                    style={{ cursor: 'pointer' }}
                   >
                     <div className="Pthmb">
-                      <img 
-                        src={`http://localhost:3000/api/post/post/${posts[0].id}/image?width=300`} 
-                        alt={posts[0].title} 
-                        id="thumbnailtest" 
+                      <img
+                        src={`http://localhost:3000/api/post/post/${posts[0].id}/image?width=300`}
+                        alt={posts[0].title}
+                        id="thumbnailtest"
                       />
                     </div>
                     <div className="infopp widget">
@@ -93,11 +99,11 @@ const PopularSide = () => {
 
                   {/* Các bài viết tiếp theo không cần thumbnail */}
                   {posts.slice(1).map(post => (
-                    <article  
-                    key={post.id} 
-                    className="itm" 
-                    onClick={() => handleNavigateToPost(post.id)}
-                    style={{ cursor: 'pointer' }}
+                    <article
+                      key={post.id}
+                      className="itm"
+                      onClick={() => handleNavigateToPost(post.id)}
+                      style={{ cursor: 'pointer' }}
                     >
                       <div className="infopp">
                         <div className="pptime">{new Date(post.created_at).toLocaleDateString()}</div>
@@ -120,8 +126,13 @@ const PopularSide = () => {
             <div style={{ padding: '10px' }}>
               <div className="clistlabels">
                 {categories.map((category) => (
-                  <div key={category.id} className="lbsz">
-                    <a className="Cat">{category.name}</a>
+                  <div
+                    key={category.id}
+                    className="lbsz"
+                    onClick={() => handleNavigateToCategory(category.id)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <span className="Cat">{category.name}</span>
                   </div>
                 ))}
               </div>

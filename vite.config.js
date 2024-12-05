@@ -26,5 +26,8 @@ export default defineConfig({
         secure: false,
       },
     },
+    host: 'localhost', // Thay vì '::1' (IPv6)
+    port: 5173,
+    strictPort: true
   },
 });

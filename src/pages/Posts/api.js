@@ -169,3 +169,18 @@ export const getNCategory = async () => {
     const res = await axios.get(`${BASE_API}/categories`);
     return res.data;
 }
+
+export const getPostsByCategoryId = async (categoryId, page = 1, limit = 6) => {
+    try {
+        const response = await axios.get(`${BASE_API}/categories/${categoryId}`, {
+            params: {
+                page,
+                limit
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching posts by category ID:', error);
+        throw error;
+    }
+}

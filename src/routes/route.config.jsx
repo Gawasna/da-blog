@@ -17,6 +17,7 @@ import ReactMarkdown from 'react-markdown';
 import CreatePost from "@/pages/Admin/CreatePost";
 import PostManagement from "@/pages/Admin/postmanagement";
 import UserManagement from "@/pages/Admin/usermanagement";
+import CategoryPostList from "@/pages/Category/Category";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: "admin/user-management",
         element: <UserManagement/>
+      },
+      {
+        path: "/category/:id",
+        element: <CategoryPostList/>
       }
     ],
   },

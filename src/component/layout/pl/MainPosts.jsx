@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 const { Title, Paragraph, Text } = Typography;
 
 function MainPosts({ showBanner = true }) {
-  // Keep existing state management code
   const navigate = useNavigate();
   const [page, setPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
